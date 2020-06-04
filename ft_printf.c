@@ -6,69 +6,84 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/05/31 12:55:45 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/04 16:05:04 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#define PRINTABLE 127
 
-static int			ft_clear_memory(t_list *output, char *temp, char *substr, size_t len)
+typedef char *(*conversion_func)(va_list ,char *);
+
+static int					free_mem(t_list *output, char *substr, size_t len)
 {
-	if (temp)
-		free(temp);
 	if (substr)
 		free(substr);
 	ft_lstclear(&output, free);
+	if (get_conversions())
+		free(get_conversions());
 	return (len);
 }
 
-static char			*ft_format_arg(va_list args, char *format_str)
+static conversion_func		*get_conversions(void)
 {
-	char		conversion;
-	
-	conversion = *(format_str + ft_strcspn(format_str, CONVERSIONS));
-	if (!ft_strchr(CONVERSIONS, conversion))
+	static conversion_func	*conversions;
+
+	if (conversions)
+		return (conversions);
+	if (!(conversions = malloc(PRINTABLE * sizeof(conversion_func))))
 		return (0);
-	else if (ft_strchr(INTEGER_CONVERSIONS, conversion))
-		return (ft_convert_integer(args, format_str));
-	else if (ft_strchr(POINTER_CONVERSION, conversion))
-		return (ft_convert_pointer(args, format_str));
-	else if (ft_strchr(FLOAT_CONVERSIONS, conversion))
-		return (ft_convert_pointer(args, format_str));
-	else if (ft_strchr(CHAR_CONVERSION, conversion))
-		return (ft_convert_char(args, format_str));
-	else if (ft_strchr(STRING_CONVERSION, conversion))
-		return (ft_convert_string(args, format_str));
-	else if (ft_strchr(COUNT_CONVERSION, conversion))
-		return (ft_convert_count(args, format_str));
-	else if (ft_strchr(PERCENT_CONVERSION, conversion))
-		return (ft_convert_percent(args, format_str));
+	conversions['d'] = ft_convert_integer;
+	conversions['i'] = ft_convert_integer;
+	return (conversions);
 }
 
-int					ft_printf(const char *format, ...)
+static char					*get_formatted_arg(va_list args, char *format)
+{
+	char				*conversion;
+	char				*substr;
+	char				*temp;
+
+	if (!(conversion = ft_strpbrk(format, CONVERSIONS)) ||
+		!(substr = ft_substr(format, 0, conversion + 1 - format)))
+		return (0);
+	temp = substr;
+	substr = get_conversions()[*conversion](args, substr);
+	free(temp);
+	return (substr);
+}
+
+static char					*get_str(char *format)
+{
+	if (!ft_strpbrk(format, "%"))
+		return (ft_strdup(format));
+	return (ft_substr(format, 0, ft_strpbrk(format, "%") - format));
+}
+
+int							ft_printf(const char *format, ...)
 {
 	va_list		args;
 	t_list		*output;
+	t_list		*new_el;
 	char		*substr;
-	char		*temp;
-	int			len;
 
 	va_start(args, format);
+	substr = 0;
 	output = 0;
 	while (*format != '\0')
 	{
-		len = ft_strcspn(format, (*format == '%' ? CONVERSIONS : "%"));
-		if (!(temp = ft_substr(format, 0, len + (*format == '%' ? 1 : 0))) ||
-			!(substr = (*format == '%' ? ft_format_arg(args, temp) : temp)))
-			return (ft_clear_memory(output, temp, 0, 0));
-		ft_lstadd_back(&output, ft_lstnew(substr));
-		if (substr != temp)
-			free(substr);
-		free(temp);
-		if (*(format + len) != '\0' && *format == '%')
-			len++;
-		format += len;
+		if (*format == '%')
+			if (!(substr = get_formatted_arg(args, format)))
+				break ;
+		else if (!(substr = get_str(format)))
+			break ;
+		if (!(new_el = ft_lstnew(substr)))
+			break ;
+		ft_lstadd_back(&output, new_el);
+		format = format + ft_strlen(substr) - *format == '%' ? 0 : 1;
 	}
 	va_end(args);
-	return (ft_clear_memory(output, 0, 0, ft_lstprint(output)));
+	if (*format != '\0')
+		return (free_mem(output, substr, 0));
+	return (free_mem(output, substr, ft_lstprint(output)));
 }

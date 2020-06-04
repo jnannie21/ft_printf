@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 23:26:09 by jnannie           #+#    #+#             */
-/*   Updated: 2020/05/31 08:25:11 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/01 08:27:26 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 								void (*del)(void *));
 
-size_t				ft_strcspn(const char *s, const char *reject);
+char				*ft_strpbrk(const char *s, const char *accept);
 
 #endif
