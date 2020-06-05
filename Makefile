@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -c -Wall -Wextra -Werror
+CFLAGS = -g -c -Wall -Wextra -Werror
 MAIN_SOURCES = 	ft_printf.c ft_printf_utils.c conversions.c
 BONUS_SOURCES =
 HEADER = ft_printf.h
@@ -23,13 +23,14 @@ $(NAME): $(OBJECTS) $(LIBFT)
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) $< -o $@
 
-$(LIBFT):
-	$(MAKE) -C libft/
-
 bonus:
 	$(MAKE) DO_BONUS=1
 
+$(LIBFT):
+	$(MAKE) bonus -C libft/
+
 clean:
+	rm -f libft/*.o
 	rm -f *.o
 
 fclean: clean
@@ -38,4 +39,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONEY: all clean fclean re bonus
+.PHONEY: all clean fclean re bonus libft

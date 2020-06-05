@@ -6,14 +6,14 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/05 13:21:02 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/05 17:15:36 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-static long long			read_signed_int_arg(va_list args, char *format)
+static long long			read_signed_arg(va_list args, const char *format)
 {
 	if (ft_strnstr(format, "ll", ft_strlen(format)))
 		return (long long)(va_arg(args, long long));
@@ -27,7 +27,7 @@ static long long			read_signed_int_arg(va_list args, char *format)
 		return (int)(va_arg(args, int));
 }
 
-static unsigned long long	read_unsigned_int_arg(va_list args, char *format)
+static unsigned long long	read_unsigned_arg(va_list args, const char *format)
 {
 	if (ft_strnstr(format, "ll", ft_strlen(format)))
 		return ((unsigned long long)va_arg(args, long long));
@@ -41,25 +41,25 @@ static unsigned long long	read_unsigned_int_arg(va_list args, char *format)
 		return ((unsigned int)va_arg(args, int));
 }
 
-char						*ft_convert_di(va_list args, char *format)
+char						*ft_convert_di(va_list args, const char *format)
 {
-	return (ft_itoa_base(read_signed_int_arg(args, format), 10));
+	return (ft_itoa_base(read_signed_arg(args, format), 10));
 }
 
-static char					*strtoupper(char *str)
+static char					*strtolower(char *str)
 {
 	unsigned int		i;
 
 	i = 0;
 	while (str[i] != '\0')
 	{
-		str[i] = ft_toupper(str[i]);
+		str[i] = ft_tolower(str[i]);
 		i++;
 	}
 	return (str);
 }
 
-char						*ft_convert_uxX(va_list args, char *format)
+char						*ft_convert_uxX(va_list args, const char *format)
 {
 	unsigned long long	arg;
 	char				*last_digit;
@@ -67,7 +67,7 @@ char						*ft_convert_uxX(va_list args, char *format)
 	char				*remains;
 	int					base;
 
-	arg = (unsigned long long)read_unsigned_int_arg(args, format);
+	arg = (unsigned long long)read_unsigned_arg(args, format);
 	base = 10;
 	if (ft_strpbrk(format, "xX"))
 		base = 16;
@@ -77,8 +77,8 @@ char						*ft_convert_uxX(va_list args, char *format)
 	else
 		remains = ft_strdup("");
 	result = ft_strjoin(remains, last_digit);
-	if (ft_strpbrk(format, "X"))
-		strtoupper(result);
+	if (ft_strpbrk(format, "x"))
+		strtolower(result);
 	free(remains);
 	free(last_digit);
 	return (result);
