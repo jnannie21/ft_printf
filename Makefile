@@ -34,7 +34,7 @@ clean:
 	rm -f *.o
 
 fclean: clean
-	$(MAKE) fclean -C libft/
+	rm -f $(LIBFT)
 	rm -f $(NAME)
 
 re: fclean all
