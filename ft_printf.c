@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/04 16:05:04 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/05 12:06:14 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ int							ft_printf(const char *format, ...)
 	va_end(args);
 	if (*format != '\0')
 		return (free_mem(output, substr, 0));
-	return (free_mem(output, substr, ft_lstprint(output)));
+	return (free_mem(output, substr, print_output(output)));
 }
