@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 23:26:09 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/01 08:27:26 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/05 13:15:34 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 								void (*del)(void *));
 
 char				*ft_strpbrk(const char *s, const char *accept);
+char				*ft_itoa_base(long long n, int base);
 
 #endif

@@ -6,11 +6,12 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/04 21:06:15 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/05 13:21:02 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft/libft.h"
 
 static long long			read_signed_int_arg(va_list args, char *format)
 {
@@ -19,9 +20,9 @@ static long long			read_signed_int_arg(va_list args, char *format)
 	else if (ft_strnstr(format, "l", ft_strlen(format)))
 		return (long)(va_arg(args, long));
 	else if (ft_strnstr(format, "hh", ft_strlen(format)))
-		return (char)(va_arg(args, char));
+		return (char)(va_arg(args, int));
 	else if (ft_strnstr(format, "h", ft_strlen(format)))
-		return (short)(va_arg(args, short));
+		return (short)(va_arg(args, int));
 	else
 		return (int)(va_arg(args, int));
 }
@@ -33,9 +34,9 @@ static unsigned long long	read_unsigned_int_arg(va_list args, char *format)
 	else if (ft_strnstr(format, "l", ft_strlen(format)))
 		return ((unsigned long)va_arg(args, long));
 	else if (ft_strnstr(format, "hh", ft_strlen(format)))
-		return ((unsigned char)va_arg(args, char));
+		return ((unsigned char)va_arg(args, int));
 	else if (ft_strnstr(format, "h", ft_strlen(format)))
-		return ((unsigned short)va_arg(args, short));
+		return ((unsigned short)va_arg(args, int));
 	else
 		return ((unsigned int)va_arg(args, int));
 }
@@ -82,11 +83,12 @@ char						*ft_convert_uxX(va_list args, char *format)
 	free(last_digit);
 	return (result);
 }
-
+/*
 char						*ft_convert_c(va_list args, char *format)
 {
 	char		*result;
 
+	(void *)format;
 	result = ft_calloc(2, sizeof(char));
 	result[0] = (unsigned char)va_arg(args, char);
 	return (result);
@@ -109,3 +111,4 @@ char						*ft_convert_pointer(va_list args, char *format)
 {
 	return (ft_convert_uxX(args, "llX"));
 }
+*/

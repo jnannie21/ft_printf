@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/05 12:06:14 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/05 13:11:38 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,6 @@
 #define PRINTABLE 127
 
 typedef char *(*conversion_func)(va_list ,char *);
-
-static int					free_mem(t_list *output, char *substr, size_t len)
-{
-	if (substr)
-		free(substr);
-	ft_lstclear(&output, free);
-	if (get_conversions())
-		free(get_conversions());
-	return (len);
-}
 
 static conversion_func		*get_conversions(void)
 {
@@ -38,7 +28,17 @@ static conversion_func		*get_conversions(void)
 	return (conversions);
 }
 
-static char					*get_formatted_arg(va_list args, char *format)
+static int					free_mem(t_list *output, char *substr, size_t len)
+{
+	if (substr)
+		free(substr);
+	ft_lstclear(&output, free);
+	if (get_conversions())
+		free(get_conversions());
+	return (len);
+}
+
+static char					*get_formatted_arg(va_list args, const char *format)
 {
 	char				*conversion;
 	char				*substr;
@@ -48,12 +48,12 @@ static char					*get_formatted_arg(va_list args, char *format)
 		!(substr = ft_substr(format, 0, conversion + 1 - format)))
 		return (0);
 	temp = substr;
-	substr = get_conversions()[*conversion](args, substr);
+	substr = get_conversions()[(int)(*conversion)](args, substr);
 	free(temp);
 	return (substr);
 }
 
-static char					*get_str(char *format)
+static char					*get_str(const char *format)
 {
 	if (!ft_strpbrk(format, "%"))
 		return (ft_strdup(format));
@@ -73,14 +73,16 @@ int							ft_printf(const char *format, ...)
 	while (*format != '\0')
 	{
 		if (*format == '%')
+		{
 			if (!(substr = get_formatted_arg(args, format)))
 				break ;
+		}
 		else if (!(substr = get_str(format)))
 			break ;
 		if (!(new_el = ft_lstnew(substr)))
 			break ;
 		ft_lstadd_back(&output, new_el);
-		format = format + ft_strlen(substr) - *format == '%' ? 0 : 1;
+		format = format + ft_strlen(substr) - ((*format == '%') ? 0 : 1);
 	}
 	va_end(args);
 	if (*format != '\0')
