@@ -13,7 +13,7 @@ else
 	OBJECTS = $(MAIN_SOURCES:.c=.o)
 endif
 
-all: $(NAME)
+all: makelibft $(NAME)
 
 $(NAME): $(OBJECTS) $(LIBFT)
 	cp $(LIBFT) $(NAME)
@@ -26,7 +26,7 @@ $(NAME): $(OBJECTS) $(LIBFT)
 bonus:
 	$(MAKE) DO_BONUS=1
 
-$(LIBFT):
+makelibft:
 	$(MAKE) bonus -C libft/
 
 clean:
@@ -39,4 +39,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONEY: all clean fclean re bonus libft
+.PHONEY: all clean fclean re bonus makelibft

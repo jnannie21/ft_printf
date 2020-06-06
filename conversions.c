@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/06 10:22:31 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/06 12:09:56 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,18 @@ char						*ft_convert_uxX(va_list args, const char *format)
 	free(last_digit);
 	return (result);
 }
-/*
-char						*ft_convert_c(va_list args, char *format)
+
+char						*ft_convert_c(va_list args, const char *format)
 {
 	char		*result;
 
-	(void *)format;
+	if (!ft_strpbrk(format, "c"))
+		return (0);
 	result = ft_calloc(2, sizeof(char));
-	result[0] = (unsigned char)va_arg(args, char);
+	result[0] = (unsigned char)va_arg(args, int);
 	return (result);
 }
-
+/*
 char						*ft_convert_s(va_list args, char *format)
 {
 	char		*result;
