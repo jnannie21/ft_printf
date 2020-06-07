@@ -6,13 +6,12 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/06 21:06:09 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/07 13:11:16 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #define PRINTABLE 127
-#define VALID_FORMAT_CHAR "-0.*lh#+ cspdiuxX%nfge"
 
 typedef char *(*conversion_func)(va_list ,const char *);
 
@@ -52,18 +51,20 @@ static char					*format_arg(va_list args, const char *format)
 
 static char					*get_substr(const char *format)
 {
-	char		*conversion;
-	size_t		len;
-	
-	if (!(conversion = ft_strpbrk(format, "%")) ||
-		(conversion == format && !(conversion = ft_strpbrk(format + 1, CONVERSIONS))))
+	char		*find;
+
+	if (*format == '%')
+	{
+		if (!(find = ft_strpbrk(format + 1, CONVERSIONS)))
 			return (ft_strdup(format));
-	len = conversion - format;
-	if (*format != '%')
-		return (ft_substr(format, 0, len));
-	if (ft_strspn(format, VALID_FORMAT_CHAR) < (len))
-		return (ft_substr(format, 0, ft_strspn(format, VALID_FORMAT_CHAR) + 1));
-	return (ft_substr(format, 0, len + 1));
+		else if (ft_strspn(format, FORMAT_CH) < (size_t)(find - format))
+			return (ft_substr(format, 0, ft_strspn(format, FORMAT_CH) + 1));
+		else
+			return (ft_substr(format, 0, find - format + 1));
+	}
+	if (!(find = ft_strpbrk(format, "%")))
+		return (ft_strdup(format));
+	return (ft_substr(format, 0, find - format));
 }
 
 int							ft_printf(const char *format, ...)

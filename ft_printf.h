@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/06 12:08:11 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/07 13:10:59 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdarg.h>
 
 # define CONVERSIONS "cspdiuxX%nfge"
+# define FORMAT_CH "-0.*lh# +cspdiuxX%nfge"
 # define INTEGER_CONVERSIONS "diuxX"
 # define POINTER_CONVERSION "p"
 # define FLOAT_CONVERSIONS "fge"
