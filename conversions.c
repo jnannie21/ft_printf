@@ -6,12 +6,14 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/07 12:57:29 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/08 21:29:20 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/libft.h"
+
+#define UTF8_MAX_OCTETS 4
 
 static long long			read_signed_arg(va_list args, const char *format)
 {
@@ -87,12 +89,19 @@ char						*ft_convert_uxX(va_list args, const char *format)
 char						*ft_convert_c(va_list args, const char *format)
 {
 	char		*result;
+	wint_t		wc;
 
-	if (!ft_strpbrk(format, "c"))
-		return (0);
-
-	result = ft_calloc(2, sizeof(char));
-	result[0] = (unsigned char)va_arg(args, int);
+	wc = (wint_t)va_arg(args, wint_t);
+	if (ft_strnstr(format, "l", ft_strlen(format)))
+	{
+		result = ft_calloc(UTF8_MAX_OCTETS + 1, sizeof(char));
+		ft_wctomb(result, wc);
+	}
+	else
+	{
+		result = ft_calloc(2, sizeof(char));
+		result[0] = (unsigned char)wc;
+	}
 	return (result);
 }
 /*

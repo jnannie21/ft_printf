@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/07 16:13:40 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/08 21:45:52 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ static conversion_func		*get_conversions(void)
 	return (conversions);
 }
 
-static void					free_mem(char *output, char *cut)
+static int					free_mem(char *output, char *cut, int err)
 {
 	if (cut != output)
 		free(cut);
 	free(output);
+	return (err);
 }
 
 static char					*format_arg(va_list args, const char *format)
@@ -85,11 +86,11 @@ int							ft_printf(const char *format, ...)
 		ft_putstr_fd(output, 1);
 		len += ft_strlen(output);
 		format += ft_strlen(cut);
-		free_mem(output, cut);
+		free_mem(output, cut, 0);
 	}
 	va_end(args);
-	if (*format != '\0')
-		free_mem(output, cut);
 	free(get_conversions());
+	if (*format != '\0')
+		return (free_mem(output, cut, -1));
 	return (len);
 }
