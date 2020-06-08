@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/08 21:29:20 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 01:15:24 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,22 +104,26 @@ char						*ft_convert_c(va_list args, const char *format)
 	}
 	return (result);
 }
-/*
-char						*ft_convert_s(va_list args, char *format)
+
+char						*ft_convert_s(va_list args, const char *format)
 {
 	char		*result;
 
+	if (ft_strnstr(format, "l", ft_strlen(format)))
+		return (0);
 	result = (char *)va_arg(args, char *);
 	return (ft_strdup(result));
 }
-
-char						*ft_convert_percent(va_list args, char *format)
+char						*ft_convert_prcnt(va_list args, const char *format)
 {
+	if (!args || !format)
+		return (0);
 	return (ft_strdup("%"));
 }
 
-char						*ft_convert_pointer(va_list args, char *format)
+char						*ft_convert_ptr(va_list args, const char *format)
 {
-	return (ft_convert_uxX(args, "llX"));
+	if (!args || !format)
+		return (0);
+	return (ft_convert_uxX(args, "llx"));
 }
-*/

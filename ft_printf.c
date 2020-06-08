@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/08 21:45:52 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 00:56:06 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ static conversion_func		*get_conversions(void)
 	conversions['x'] = ft_convert_uxX;
 	conversions['X'] = ft_convert_uxX;
 	conversions['c'] = ft_convert_c;
+	conversions['s'] = ft_convert_s;
+	conversions['%'] = ft_convert_prcnt;
+	conversions['p'] = ft_convert_ptr;
 	return (conversions);
 }
 
