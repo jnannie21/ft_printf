@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/09 21:58:58 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 23:13:42 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static char					*flag_field_width(char *result, const char *format)
 	char				*field_s;
 	size_t				field_width;
 	char				*padd;
+	char				*temp;
+	char				*temp2;
 
 	if (!(field_s = ft_strpbrk(format, "123456789")))
 		return (result);
@@ -69,14 +71,25 @@ static char					*flag_field_width(char *result, const char *format)
 	ft_memset(padd, ' ', field_width - ft_strlen(result));
 	if (ft_strpbrk(format, "-"))
 		result = ft_strjoin(result, padd);
-	else if (ft_strpbrk(format, "0") &&
-			(ft_strpbrk(format, "0") < ft_strpbrk(format, "123456789")))
-			{
-				ft_memset(padd, '0', field_width - ft_strlen(result));
-				result = ft_strjoin(padd, result);
-			}
 	else
+	{
+		if (ft_strpbrk(format, "0") &&
+			(ft_strpbrk(format, "0") < ft_strpbrk(format, "123456789")))
+			ft_memset(padd, '0', field_width - ft_strlen(result));
+		if (ft_strpbrk(format, "di") && !ft_strchr("123456789", *result)) //if result == "0" ?
+		{
+			if (!(temp = ft_substr(result, 0, 1)))
+				return (0);
+			result += 1;
+			temp2 = padd;
+			padd = ft_strjoin(temp, padd);
+			free(temp);
+			free(temp2);
+			if (!padd)
+				return (0);
+		}
 		result = ft_strjoin(padd, result);
+	}
 	return (result);
 }
 
