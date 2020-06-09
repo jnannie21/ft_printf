@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/09 15:32:38 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 16:51:08 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static conversion_func		*get_conversions(void)
 		conversions['s'] = ft_convert_s;
 		conversions['%'] = ft_convert_prcnt;
 		conversions['p'] = ft_convert_ptr;
+		conversions['n'] = ft_convert_n;
 	}
 	return (conversions);
 }
@@ -76,10 +77,8 @@ int							ft_printf(const char *format, ...)
 	va_list		args;
 	char		*output;
 	char		*cut;
-	size_t		len;
 
 	va_start(args, format);
-	len = 0;
 	while (*format != '\0')
 	{
 		cut = get_substr(format);
@@ -88,12 +87,12 @@ int							ft_printf(const char *format, ...)
 			(*output == '%' && !(output = format_arg(args, output))))
 			break ;
 		ft_putstr_fd(output, 1);
-		len += ft_strlen(output);
+		ft_printf_count_len(0, ft_strlen(output));
 		format += ft_strlen(cut);
 		free_mem(output, cut, 0);
 	}
 	va_end(args);
 	if (*format != '\0')
 		return (free_mem(output, cut, -1));
-	return (len);
+	return (ft_printf_count_len(1, 0));
 }
