@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/09 17:32:41 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 19:02:24 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,30 @@ char						*ft_convert_di(va_list args, const char *format)
 	return (ft_itoa_base(read_signed_arg(args, format), 10));
 }
 
+static char					*u_itoa_base(unsigned long long n, int base)
+{
+	char				*last_digit;
+	char				*result;
+	char				*remains;
+
+	last_digit = ft_itoa_base(n % base, base);
+	if (n / base != 0)
+		remains = ft_itoa_base(n / base, base);
+	else
+		remains = ft_strdup("");
+	result = 0;
+	if (last_digit && remains)
+		result = ft_strjoin(remains, last_digit);
+	free(remains);
+	free(last_digit);
+	return (result);
+}
+
+char						*ft_convert_u(va_list args, const char *format)
+{
+	return (u_itoa_base(read_unsigned_arg(args, format), 10));
+}
+
 static char					*strtolower(char *str)
 {
 	unsigned int		i;
@@ -62,28 +86,11 @@ static char					*strtolower(char *str)
 	return (str);
 }
 
-char						*ft_convert_uxX(va_list args, const char *format)
+char						*ft_convert_xX(va_list args, const char *format)
 {
-	unsigned long long	arg;
-	char				*last_digit;
 	char				*result;
-	char				*remains;
-	int					base;
 
-	arg = (unsigned long long)read_unsigned_arg(args, format);
-	base = 10;
-	if (ft_strpbrk(format, "xX"))
-		base = 16;
-	last_digit = ft_itoa_base(arg % base, base);
-	if (arg / base != 0)
-		remains = ft_itoa_base(arg / base, base);
-	else
-		remains = ft_strdup("");
-	result = 0;
-	if (last_digit && remains)
-		result = ft_strjoin(remains, last_digit);
-	free(remains);
-	free(last_digit);
+	result = u_itoa_base(read_unsigned_arg(args, format), 16);
 	if (result && ft_strpbrk(format, "x"))
 		strtolower(result);
 	return (result);
@@ -117,6 +124,7 @@ char						*ft_convert_s(va_list args, const char *format)
 	result = (char *)va_arg(args, char *);
 	return (ft_strdup(result));
 }
+
 char						*ft_convert_prcnt(va_list args, const char *format)
 {
 	if (!args || !format)
@@ -128,7 +136,7 @@ char						*ft_convert_ptr(va_list args, const char *format)
 {
 	if (!args || !format)
 		return (0);
-	return (ft_convert_uxX(args, "llx"));
+	return (ft_convert_xX(args, "llx"));
 }
 
 size_t						ft_printf_count_len(int set_zero, size_t l)
