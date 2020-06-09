@@ -6,12 +6,11 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/09 19:02:24 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 21:58:58 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
 #include <wchar.h>
 
 #define UTF8_MAX_OCTETS 4
@@ -44,9 +43,69 @@ static unsigned long long	read_unsigned_arg(va_list args, const char *format)
 		return ((unsigned int)va_arg(args, int));
 }
 
+static char					*flag_space(char *result)
+{
+	return (ft_strjoin(" ", result));
+}
+
+static char					*flag_plus(char *result)
+{
+	return (ft_strjoin("+", result));
+}
+
+static char					*flag_field_width(char *result, const char *format)
+{
+	char				*field_s;
+	size_t				field_width;
+	char				*padd;
+
+	if (!(field_s = ft_strpbrk(format, "123456789")))
+		return (result);
+	field_width = ft_atoi(field_s);
+	if (field_width <= ft_strlen(result))
+		return (result);
+	if (!(padd = ft_calloc(field_width - ft_strlen(result) + 1, sizeof(char))))
+		return (0);
+	ft_memset(padd, ' ', field_width - ft_strlen(result));
+	if (ft_strpbrk(format, "-"))
+		result = ft_strjoin(result, padd);
+	else if (ft_strpbrk(format, "0") &&
+			(ft_strpbrk(format, "0") < ft_strpbrk(format, "123456789")))
+			{
+				ft_memset(padd, '0', field_width - ft_strlen(result));
+				result = ft_strjoin(padd, result);
+			}
+	else
+		result = ft_strjoin(padd, result);
+	return (result);
+}
+
 char						*ft_convert_di(va_list args, const char *format)
 {
-	return (ft_itoa_base(read_signed_arg(args, format), 10));
+	char				*result;
+	char				*temp;
+	long long			arg;
+
+	arg = read_signed_arg(args, format);
+	if (!(result = ft_itoa_base(arg, 10)))
+		return (0);
+	temp = result;
+	if (ft_strpbrk(format, "+") && arg >= 0)
+		result = flag_plus(result);
+	else if (ft_strpbrk(format, " ") && arg >= 0)
+		result = flag_space(result);
+	if (temp != result)
+		free(temp);
+	if (!result)
+		return (0);
+	temp = result;
+	if (ft_strpbrk(format, "123456789"))
+		result = flag_field_width(result, format);
+	if (temp != result)
+		free(temp);
+	if (!result)
+		return (0);
+	return (result);
 }
 
 static char					*u_itoa_base(unsigned long long n, int base)
@@ -86,13 +145,29 @@ static char					*strtolower(char *str)
 	return (str);
 }
 
+static char					*flag_numbersign(char *result, const char *format)
+{
+	if (ft_strpbrk(format, "x"))
+		return (ft_strjoin("0x", result));
+	return (ft_strjoin("0X", result));
+}
+
 char						*ft_convert_xX(va_list args, const char *format)
 {
 	char				*result;
+	char				*temp;
 
-	result = u_itoa_base(read_unsigned_arg(args, format), 16);
-	if (result && ft_strpbrk(format, "x"))
+	if (!(result = u_itoa_base(read_unsigned_arg(args, format), 16)))
+		return (0);
+	if (ft_strpbrk(format, "x"))
 		strtolower(result);
+	if (ft_strpbrk(format, "#"))
+	{
+		temp = result;
+		if (!(result = flag_numbersign(result, format)))
+			return (0);
+		free(temp);
+	}
 	return (result);
 }
 
@@ -136,7 +211,7 @@ char						*ft_convert_ptr(va_list args, const char *format)
 {
 	if (!args || !format)
 		return (0);
-	return (ft_convert_xX(args, "llx"));
+	return (ft_convert_xX(args, "#llx"));
 }
 
 size_t						ft_printf_count_len(int set_zero, size_t l)

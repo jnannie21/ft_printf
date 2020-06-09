@@ -6,14 +6,14 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/09 18:59:54 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 22:02:55 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #define PRINTABLE 127
 #define CONVERSIONS "cspdiuxX%nfge"
-#define FORMAT_CH "-0.*lh# +cspdiuxX%nfge"
+#define FORMAT_CH "-0.*lh#123456789 +cspdiuxX%nfge"
 
 typedef char *(*conversion_func)(va_list ,const char *);
 
