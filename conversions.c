@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/09 23:13:42 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 23:49:08 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,23 +73,26 @@ static char					*flag_field_width(char *result, const char *format)
 		result = ft_strjoin(result, padd);
 	else
 	{
-		if (ft_strpbrk(format, "0") &&
+		if (ft_strpbrk(format, "di") && ft_strpbrk(format, "0") &&
 			(ft_strpbrk(format, "0") < ft_strpbrk(format, "123456789")))
-			ft_memset(padd, '0', field_width - ft_strlen(result));
-		if (ft_strpbrk(format, "di") && !ft_strchr("123456789", *result)) //if result == "0" ?
 		{
-			if (!(temp = ft_substr(result, 0, 1)))
-				return (0);
-			result += 1;
-			temp2 = padd;
-			padd = ft_strjoin(temp, padd);
-			free(temp);
-			free(temp2);
-			if (!padd)
-				return (0);
+			ft_memset(padd, '0', field_width - ft_strlen(result));
+			if (!ft_strchr("1234567890", *result))
+			{
+				if (!(temp = ft_substr(result, 0, 1)))
+					return (0);
+				result += 1;
+				temp2 = padd;
+				padd = ft_strjoin(temp, padd);
+				free(temp);
+				free(temp2);
+				if (!padd)
+					return (0);
+			}
 		}
 		result = ft_strjoin(padd, result);
 	}
+	free(padd);
 	return (result);
 }
 
