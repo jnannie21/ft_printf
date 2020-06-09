@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/05 09:34:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/05 12:00:36 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 01:59:54 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char				*ft_itoa_base(long long n, int base)
 	int		num;
 
 	num = count_num(n, base);
-	s = ft_calloc((num + 1 + (n < 0)), sizeof(char));
+	if (!(s = ft_calloc((num + 1 + (n < 0)), sizeof(char))))
+		return (0);
 	s[0] = (n < 0) ? '-' : '\0';
 	while (num--)
 	{

@@ -6,32 +6,33 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/09 00:56:06 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 15:32:38 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #define PRINTABLE 127
+#define CONVERSIONS "cspdiuxX%nfge"
+#define FORMAT_CH "-0.*lh# +cspdiuxX%nfge"
 
 typedef char *(*conversion_func)(va_list ,const char *);
 
 static conversion_func		*get_conversions(void)
 {
-	static conversion_func	*conversions;
+	static conversion_func	conversions[PRINTABLE];
 
-	if (conversions)
-		return (conversions);
-	if (!(conversions = malloc(PRINTABLE * sizeof(conversion_func))))
-		return (0);
-	conversions['d'] = ft_convert_di;
-	conversions['i'] = ft_convert_di;
-	conversions['u'] = ft_convert_uxX;
-	conversions['x'] = ft_convert_uxX;
-	conversions['X'] = ft_convert_uxX;
-	conversions['c'] = ft_convert_c;
-	conversions['s'] = ft_convert_s;
-	conversions['%'] = ft_convert_prcnt;
-	conversions['p'] = ft_convert_ptr;
+	if (!conversions['d'])
+	{
+		conversions['d'] = ft_convert_di;
+		conversions['i'] = ft_convert_di;
+		conversions['u'] = ft_convert_uxX;
+		conversions['x'] = ft_convert_uxX;
+		conversions['X'] = ft_convert_uxX;
+		conversions['c'] = ft_convert_c;
+		conversions['s'] = ft_convert_s;
+		conversions['%'] = ft_convert_prcnt;
+		conversions['p'] = ft_convert_ptr;
+	}
 	return (conversions);
 }
 
@@ -49,7 +50,7 @@ static char					*format_arg(va_list args, const char *format)
 
 	if (!(conversion = ft_strpbrk(format + 1, CONVERSIONS)))
 		return ((char *)format);
-	return (get_conversions()[(int)(*conversion)](args, format));
+	return (get_conversions()[(int)*conversion](args, format));
 }
 
 static char					*get_substr(const char *format)
@@ -92,7 +93,6 @@ int							ft_printf(const char *format, ...)
 		free_mem(output, cut, 0);
 	}
 	va_end(args);
-	free(get_conversions());
 	if (*format != '\0')
 		return (free_mem(output, cut, -1));
 	return (len);

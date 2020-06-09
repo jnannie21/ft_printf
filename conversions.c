@@ -6,12 +6,13 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/09 01:15:24 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/09 15:30:57 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/libft.h"
+#include <wchar.h>
 
 #define UTF8_MAX_OCTETS 4
 
@@ -78,11 +79,13 @@ char						*ft_convert_uxX(va_list args, const char *format)
 		remains = ft_itoa_base(arg / base, base);
 	else
 		remains = ft_strdup("");
-	result = ft_strjoin(remains, last_digit);
-	if (ft_strpbrk(format, "x"))
-		strtolower(result);
+	result = 0;
+	if (last_digit && remains)
+		result = ft_strjoin(remains, last_digit);
 	free(remains);
 	free(last_digit);
+	if (result && ft_strpbrk(format, "x"))
+		strtolower(result);
 	return (result);
 }
 
