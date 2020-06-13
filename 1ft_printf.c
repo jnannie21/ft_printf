@@ -6,12 +6,17 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/14 01:55:45 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/13 19:13:49 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #define PRINTABLE 127
+#define CONVERSIONS "cspdiuxX%nfge"
+#define FLAGS "-0# +"
+#define FIELD_WIDTH "*1234567890"
+#define PRECISON ".1234567890"
+#define LENGTH_MODIFIERS "lh"
 
 typedef char *(*conversion_func)(va_list ,const char *);
 
@@ -35,36 +40,66 @@ static conversion_func		*get_conversions(void)
 	return (conversions);
 }
 
-static char					*get_output_by_format(va_list args, char *format)
+static int					free_mem(char *output, char *cut, int err)
+{
+	if (cut != output)
+		free(cut);
+	free(output);
+	return (err);
+}
+
+static char					*format_arg(va_list args, const char *format)
 {
 	char				*conversion;
-	char				*output;
 
-	if (!format ||
-		*format != '%' ||
-		!(conversion = ft_strpbrk(format + 1, CONVERSIONS)))
+	if (!(conversion = ft_strpbrk(format + 1, CONVERSIONS)))
 		return ((char *)format);
-	output = get_conversions()[(int)*conversion](args, format);
-	free(format);
-	return (output);
+	return (get_conversions()[(int)*conversion](args, format));
+}
+
+static char					*get_substr(const char *format)
+{
+	const char		*find;
+
+	if (*format == '%')
+	{
+		find = format + 1;
+		while (ft_strchr(FLAGS, *find))
+			find++;
+		while (ft_strchr(FIELD_WIDTH, *find))
+			find++;
+		while (ft_strchr(PRECISON, *find))
+			find++;
+		while (ft_strchr(LENGTH_MODIFIERS, *find))
+			find++;
+		return (ft_substr(format, 0, find - format + 1));
+	}
+	if (!(find = ft_strpbrk(format, "%")))
+		return (ft_strdup(format));
+	return (ft_substr(format, 0, find - format));
 }
 
 int							ft_printf(const char *format, ...)
 {
 	va_list		args;
 	char		*output;
+	char		*cut;
 
 	va_start(args, format);
-	while (*format)
+	while (*format != '\0')
 	{
-		if (!(output = get_output_by_format(args, parse_format(&format))))
+		cut = get_substr(format);
+		output = cut;
+		if (!output ||
+			(*output == '%' && !(output = format_arg(args, output))))
 			break ;
-		write(1, output, ft_strlen(output));
+		ft_putstr_fd(output, 1);
 		output_len(1, ft_strlen(output));
-		free(output);
+		format += ft_strlen(cut);
+		free_mem(output, cut, 0);
 	}
 	va_end(args);
 	if (*format != '\0')
-		return (-1);
+		return (free_mem(output, cut, -1));
 	return (output_len(0, 0));
 }
