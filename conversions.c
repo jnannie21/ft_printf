@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/13 19:13:36 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/14 03:55:13 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,9 +237,9 @@ size_t						output_len(int increase, size_t l)
 
 	temp = len;
 	if (increase)
-		len = l;
-	else
 		len += l;
+	else
+		len = l;
 	return (temp);
 }
 
