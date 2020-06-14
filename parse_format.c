@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 01:53:42 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/14 02:42:05 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/14 03:31:53 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define FLAGS "-0# +"
 #define FIELD_WIDTH "*1234567890"
-#define PRECISON ".1234567890"
+#define PRECISON "1234567890"
 #define LENGTH_MODIFIERS "lh"
 
 static void				parse_flags(char **temp, const char **format)
@@ -37,8 +37,15 @@ static void				parse_width_and_prec(char **temp, const char **format)
 	while (ft_strchr(FIELD_WIDTH, **format))
 		*(*temp)++ = *(*format)++;
 	if (**format == '.')
+	{
+		*(*temp)++ = *(*format)++;
+		while (**format == '0')
+			(*format)++;
+		if (!ft_strchr(PRECISON, **format))
+			*(*temp)++ = '0';
 		while (ft_strchr(PRECISON, **format))
 			*(*temp)++ = *(*format)++;
+	}
 }
 
 char					*parse_format(const char **format)
