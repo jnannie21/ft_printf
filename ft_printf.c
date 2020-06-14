@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/14 01:55:45 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/14 20:14:03 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int							ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (*format)
 	{
-		if (!(output = get_output_by_format(args, parse_format(&format))))
+		if (!(output = get_output_by_format(args, parse_format(args, &format))))
 			break ;
 		write(1, output, ft_strlen(output));
 		output_len(1, ft_strlen(output));

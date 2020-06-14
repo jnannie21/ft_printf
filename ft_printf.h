@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/14 01:56:26 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/14 20:13:35 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ char				*ft_convert_prcnt(va_list args, const char *format);
 char				*ft_convert_ptr(va_list args, const char *format);
 size_t				output_len(int set, size_t l);
 char				*ft_convert_n(va_list args, const char *format);
-char				*parse_format(const char **format);
+char				*parse_format(va_list args, const char **format);
 
 #endif
