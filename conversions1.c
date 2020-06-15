@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/15 03:16:12 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/15 19:21:33 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,14 @@ static unsigned long long	read_unsigned_arg(va_list args, const char *format)
 char						*ft_convert_di(va_list args, const char *format)
 {
 	char				*result;
-	char				*temp;
 	long long			arg;
 
 	arg = read_signed_arg(args, format);
 	if (!(result = ft_itoa_base(arg, 10)))
 		return (0);
-	temp = result;
-	if (ft_strpbrk(format, "+") && arg >= 0)
-		result = flag_plus(result);
-	else if (ft_strpbrk(format, " ") && arg >= 0)
-		result = flag_space(result);
-	if (temp != result)
-		free(temp);
-	if (!result)
-		return (0);
-	temp = result;
-	if (ft_strpbrk(format, "123456789"))
-		result = field_width(result, format);
-	if (temp != result)
-		free(temp);
-	if (!result)
-		return (0);
+	result = precision(result, format);
+	result = flag_plus_space(result, format);
+	result = field_width(result, format);
 	return (result);
 }
 
@@ -76,18 +62,11 @@ char						*ft_convert_u(va_list args, const char *format)
 char						*ft_convert_xX(va_list args, const char *format)
 {
 	char				*result;
-	char				*temp;
 
 	if (!(result = u_itoa_base(read_unsigned_arg(args, format), 16)))
 		return (0);
 	if (ft_strpbrk(format, "x"))
 		strtolower(result);
-	if (ft_strpbrk(format, "#"))
-	{
-		temp = result;
-		if (!(result = flag_numbersign(result, format)))
-			return (0);
-		free(temp);
-	}
+	result = flag_numbersign(result, format);
 	return (result);
 }

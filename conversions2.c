@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/15 03:05:51 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/15 18:03:04 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char						*ft_convert_s(va_list args, const char *format)
 {
 	char		*result;
 
-	if (ft_strnstr(format, "l", ft_strlen(format)))
+	if (!args || !format)
 		return (0);
 	result = (char *)va_arg(args, char *);
 	return (ft_strdup(result));
