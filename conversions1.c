@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/15 19:21:33 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/17 05:02:14 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ char						*ft_convert_di(va_list args, const char *format)
 	long long			arg;
 
 	arg = read_signed_arg(args, format);
-	if (!(result = ft_itoa_base(arg, 10)))
+	if (!(result = ft_itoa_base(arg > 0 ? arg : arg * (-1), 10)))
 		return (0);
-	result = precision(result, format);
-	result = flag_plus_space(result, format);
-	result = field_width(result, format);
+	result = precision_width(result, ft_strchrnul(format, '.'));
+	result = precision_width(result, format);
+	result = flag_minus_zero(result, format);
+	result = flag_plus_space(result, format, arg);
 	return (result);
 }
 
@@ -62,11 +63,17 @@ char						*ft_convert_u(va_list args, const char *format)
 char						*ft_convert_xX(va_list args, const char *format)
 {
 	char				*result;
+	long long			arg;
 
-	if (!(result = u_itoa_base(read_unsigned_arg(args, format), 16)))
+	arg = read_unsigned_arg(args, format);
+	if (!(result = u_itoa_base(arg, 16)))
 		return (0);
 	if (ft_strpbrk(format, "x"))
 		strtolower(result);
-	result = flag_numbersign(result, format);
+	result = precision_width(result, ft_strchrnul(format, '.'));
+	result = precision_width(result, format);
+	result = flag_minus_zero(result, format);
+	if (arg != 0)
+		result = flag_numbersign(result, format);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 01:53:42 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/15 00:51:46 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/17 06:01:56 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ static int				read_from_argument(va_list args, char **temp,
 	int			i_arg;
 
 	i_arg = (int)(va_arg(args, int));
-	if (i_arg < 0 && (*(*format - 1)) == '.')
+	if (i_arg < 0 && **format == '.')
 	{
-		(*format)++;
+		*format += 2;
 		return (0);
 	}
-	else if ((*(*format - 1)) == '.')
-		*(*temp)++ = '.';
+	else if (**format == '.')
+		*(*temp)++ = *(*format)++;
 	if (!(s_arg = ft_itoa(i_arg)))
 		return (-1);
 	ft_memcpy(*temp, s_arg, ft_strlen(s_arg));
@@ -63,24 +63,28 @@ static int				parse_width_precision(va_list args, char **temp,
 													const char **format)
 {
 	if (**format != '*')
-		while (ft_strchr(FIELD_WIDTH, **format))
+		while (**format && ft_strchr(FIELD_WIDTH, **format))
 			*(*temp)++ = *(*format)++;
 	else if (read_from_argument(args, temp, format) == -1)
 		return (-1);
-	if (**format == '.')
+	if (**format == '.' && *(*format + 1))
 	{
-		(*format)++;
-		if (**format != '*')
+		if (ft_strchr(PRECISON, *(*format + 1)))
 		{
+			*(*temp)++ = *(*format)++;
 			while (**format == '0')
 				(*format)++;
-			if (!ft_strchr(PRECISON, **format))
-				*(*temp)++ = '0';
-			while (ft_strchr(PRECISON, **format))
+			while (**format && ft_strchr(PRECISON, **format))
 				*(*temp)++ = *(*format)++;
 		}
-		else if (read_from_argument(args, temp, format) == -1)
+		else if (*(*format + 1) == '*' &&
+				read_from_argument(args, temp, format) == -1)
 			return (-1);
+		else
+		{
+			*(*temp)++ = *(*format)++;
+			*(*temp)++ = '0';
+		}
 	}
 	return (0);
 }
@@ -91,9 +95,9 @@ static void				parse_len_conversion(char **temp, const char **format)
 		(ft_strspn(*format, LENGTH_MODIFIERS) == 2 &&
 		**format != *(*format + 1)))
 		return ;
-	while (ft_strchr(LENGTH_MODIFIERS, **format))
+	while (**format && ft_strchr(LENGTH_MODIFIERS, **format))
 		*(*temp)++ = *(*format)++;
-	if (ft_strchr(CONVERSIONS, **format))
+	if (**format && ft_strchr(CONVERSIONS, **format))
 		**temp = *(*format)++;
 }
 
