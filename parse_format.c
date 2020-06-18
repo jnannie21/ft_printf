@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 01:53:42 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/17 06:01:56 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/18 05:39:09 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int				read_from_argument(va_list args, char **temp,
 }
 
 static int				parse_width_precision(va_list args, char **temp,
-													const char **format)
+														const char **format)
 {
 	if (**format != '*')
 		while (**format && ft_strchr(FIELD_WIDTH, **format))

@@ -6,48 +6,93 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 02:58:46 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/17 06:18:30 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/18 05:26:30 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 #define HEX_DIGITS "0123456789abcdefABCDEF"
+#define PREFIXES "0 +-xX"
 
-static void					attach_spaces(char *result, size_t prefix_len)
+static void				strcpytoend(char *dest, const char *src)
 {
-	while (prefix_len--)
-		if (*result == '0' && *(result + 1) != '\0')
-			*result++ = ' ';
+	size_t		dest_len;
+	size_t		src_len;
+
+	dest_len = ft_strlen(dest);
+	src_len = ft_strlen(src);
+	ft_memcpy(dest + dest_len - src_len, src, src_len);
 }
 
-static char					*attach_prefix(char *result, char *prefix,
-													const char *format)
+static char				*fill_with_filler(char *result, size_t length,
+										char *prefixes, char filler)
 {
-	char		*temp;
-	size_t		spaces_count;
-	size_t		result_len;
-	size_t		prefix_len;
-	size_t		diff;
+	char	*temp;
+	int		prefix_len;
 
-	prefix_len = ft_strlen(prefix);
-	if (!ft_strchr(format, '.'))
-		attach_spaces(result, prefix_len);
-	spaces_count = ft_strspn(ft_strchrnul(result, ' '), " ");
-	result_len = ft_strlen(result);
-	diff = 0;
-	if (spaces_count < prefix_len)
-		diff = (prefix_len - spaces_count);
+	if (length <= ft_strlen(result))
+		return (result);
+	prefix_len = ft_strspn(result, prefixes);
 	temp = result;
-	result = ft_calloc(result_len + diff + 1, sizeof(char));
-	ft_memset(result, ' ', result_len + diff);
-	if (*temp == ' ')
-		ft_memcpy(result + diff, temp, result_len);
-	else
-		ft_memcpy(result + prefix_len, temp, result_len + diff - prefix_len);
-	ft_memcpy(ft_strpbrk(result, HEX_DIGITS) - prefix_len, prefix, prefix_len);
+	if (!(result = ft_calloc(length + 1, sizeof(char))))
+		return (0);
+	ft_memset(result, filler, length);
+	strcpytoend(result, temp + prefix_len);
+	ft_memcpy(result, temp, prefix_len);
 	free(temp);
 	return (result);
+}
+
+char					*integer_precision(char *result, const char *format)
+{
+	char				*precision_point;
+	size_t				precision;
+	int					negative;
+
+	negative = (*result == '-');
+	if (!(precision_point = ft_strchr(format, '.')))
+		return (result);
+	precision = ft_atoi(precision_point + 1);
+	result = fill_with_filler(result, precision + negative, PREFIXES, '0');
+	return (result);
+}
+
+char					*width(char *result, const char *format)
+{
+	char				*width_start;
+	size_t				width;
+
+	if (!(width_start = ft_strpbrk(format, "123456789")) ||
+		*(width_start - 1) == '.')
+		return (result);
+	width = ft_atoi(width_start);
+	result = fill_with_filler(result, width, "", ' ');
+	return (result);
+}
+
+static char					*attach_prefix(char *result, char *prefix)
+{
+	char	*temp;
+
+	temp = result;
+	result = ft_strjoin(prefix, result);
+	free(temp);
+	return (result);
+}
+
+char					*flag_plus_space(char *result, const char *format)
+{
+	char		*prefix;
+
+	prefix = "";
+	if (*result == '-')
+		return (result);
+	if (ft_strchr(format, '+'))
+		prefix = "+";
+	else if (ft_strchr(format, ' '))
+		prefix = " ";
+	return (attach_prefix(result, prefix));
 }
 
 char					*flag_numbersign(char *result, const char *format)
@@ -55,66 +100,48 @@ char					*flag_numbersign(char *result, const char *format)
 	if (ft_strchr(format, '#'))
 	{
 		if (ft_strpbrk(format, "x"))
-			result = attach_prefix(result, "0x", format);
+			result = attach_prefix(result, "0x");
 		else if (ft_strpbrk(format, "X"))
-			result = attach_prefix(result, "0X", format);
+			result = attach_prefix(result, "0X");
 	}
 	return (result);
 }
 
-char					*flag_plus_space(char *result, const char *format,
-															long long arg)
-{
-	char		*prefix;
-
-	prefix = "";
-	if (arg < 0)
-		prefix = "-";
-	else if (ft_strchr(format, '+') && arg >= 0)
-		prefix = "+";
-	else if (ft_strchr(format, ' '))
-		prefix = " ";
-	return (attach_prefix(result, prefix, format));
-}
-
-char					*precision_width(char *result, const char *format)
-{
-	char				*number_start;
-	size_t				number;
-	char				*temp;
-	char				filler;
-
-	if (!(number_start = ft_strpbrk(format, "123456789")) ||
-		(number = ft_atoi(number_start)) <= ft_strlen(result))
-		return (result);
-	filler = ' ';
-	if (*(number_start - 1) == '.')
-		filler = '0';
-	temp = result;
-	if ((result = ft_calloc(number + 1, sizeof(char))))
-	{
-		ft_memset(result, filler, number);
-		ft_memcpy(result + (ft_strlen(result) - ft_strlen(temp)), temp, ft_strlen(temp));
-	}
-	free(temp);
-	return (result);
-}
-
-char					*flag_minus_zero(char *result, const char *format)
+char					*flag_minus(char *result, const char *format)
 {
 	size_t		space_count;
 	size_t		result_len;
 
-	space_count = ft_strspn(result, " ");
 	if (ft_strchr(format, '-'))
 	{
+		space_count = ft_strspn(result, " ");
 		result_len = ft_strlen(result + space_count);
 		ft_memmove(result, result + space_count, result_len);
 		ft_memset(result + result_len, ' ', space_count);
 	}
-	else if (!(ft_strchr(format, '.')) &&
-			ft_strpbrk(format, "1234567890") &&
-			*(ft_strpbrk(format, "1234567890")) == '0')
-		ft_memset(result, '0', space_count);
+	return (result);
+}
+
+char					*flag_zero(char *result, const char *format)
+{
+	char		*search;
+	char		*temp;
+	int			spaces;
+
+	if (!(ft_strchr(format, '.')) &&
+		!(ft_strchr(format, '-')) &&
+		(search = ft_strpbrk(format, "1234567890")) &&
+		*search == '0')
+		{
+			temp = result;
+			spaces = ft_strspn(result, " ");
+			if (spaces > 0 &&
+				ft_strchr(format, ' ') &&
+				!(ft_strchr(PREFIXES, *result)))
+				spaces--;
+			result = ft_strdup(result + spaces);
+			result = fill_with_filler(result, ft_strlen(temp), PREFIXES, '0');
+			free(temp);
+		}
 	return (result);
 }
