@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/18 05:31:14 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/18 07:42:06 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ char						*ft_convert_di(va_list args, const char *format)
 	if (!(result = ft_itoa_base(arg, 10)))
 		return (0);
 	result = integer_precision(result, format);
-	result = flag_plus_space(result, format);
+	result = flag_plus_and_space(result, format);
 	result = width(result, format);
 	result = flag_minus(result, format);
 	result = flag_zero(result, format);
+	result = flag_space(result, format);
 	return (result);
 }
 

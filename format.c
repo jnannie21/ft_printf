@@ -6,13 +6,13 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 02:58:46 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/18 05:26:30 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/18 07:40:35 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-#define HEX_DIGITS "0123456789abcdefABCDEF"
+//#define HEX_DIGITS "0123456789abcdefABCDEF"
 #define PREFIXES "0 +-xX"
 
 static void				strcpytoend(char *dest, const char *src)
@@ -81,17 +81,16 @@ static char					*attach_prefix(char *result, char *prefix)
 	return (result);
 }
 
-char					*flag_plus_space(char *result, const char *format)
+char					*flag_plus_and_space(char *result, const char *format)
 {
 	char		*prefix;
 
 	prefix = "";
 	if (*result == '-')
 		return (result);
-	if (ft_strchr(format, '+'))
+	if (ft_strchr(format, '+') ||
+		ft_strchr(format, ' '))
 		prefix = "+";
-	else if (ft_strchr(format, ' '))
-		prefix = " ";
 	return (attach_prefix(result, prefix));
 }
 
@@ -135,13 +134,19 @@ char					*flag_zero(char *result, const char *format)
 		{
 			temp = result;
 			spaces = ft_strspn(result, " ");
-			if (spaces > 0 &&
-				ft_strchr(format, ' ') &&
-				!(ft_strchr(PREFIXES, *result)))
-				spaces--;
 			result = ft_strdup(result + spaces);
 			result = fill_with_filler(result, ft_strlen(temp), PREFIXES, '0');
 			free(temp);
 		}
+	return (result);
+}
+
+char					*flag_space(char *result, const char *format)
+{
+	char		*sign;
+
+	if (ft_strchr(format, ' ') &&
+		(sign = ft_strchr(result, '+')))
+			*sign = ' ';
 	return (result);
 }
