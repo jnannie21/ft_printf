@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 01:53:42 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/18 05:39:09 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/18 20:47:38 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ static int				parse_width_precision(va_list args, char **temp,
 			while (**format && ft_strchr(PRECISON, **format))
 				*(*temp)++ = *(*format)++;
 		}
-		else if (*(*format + 1) == '*' &&
-				read_from_argument(args, temp, format) == -1)
-			return (-1);
+		else if (*(*format + 1) == '*')
+			{
+				if (read_from_argument(args, temp, format) == -1)
+					return (-1);
+			}
 		else
 		{
 			*(*temp)++ = *(*format)++;
@@ -91,10 +93,19 @@ static int				parse_width_precision(va_list args, char **temp,
 
 static void				parse_len_conversion(char **temp, const char **format)
 {
-	if (ft_strspn(*format, LENGTH_MODIFIERS) > 2 ||
-		(ft_strspn(*format, LENGTH_MODIFIERS) == 2 &&
+	size_t		length_modifiers_len;
+
+	length_modifiers_len = ft_strspn(*format, LENGTH_MODIFIERS);
+	if (length_modifiers_len > 2 ||
+		!ft_strchr(CONVERSIONS, *(*format + length_modifiers_len)) ||
+		(length_modifiers_len == 2 &&
 		**format != *(*format + 1)))
-		return ;
+		{
+			if (length_modifiers_len > 2)
+				length_modifiers_len = 2;
+			*format += length_modifiers_len;
+			return ;
+		}
 	while (**format && ft_strchr(LENGTH_MODIFIERS, **format))
 		*(*temp)++ = *(*format)++;
 	if (**format && ft_strchr(CONVERSIONS, **format))

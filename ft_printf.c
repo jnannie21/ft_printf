@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/15 03:30:58 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/18 07:50:33 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static conversion_func		*get_conversions(void)
 	return (conversions);
 }
 
-static char					*get_output_by_format(va_list args, char *format)
+static char					*output_by_format(va_list args, char *format)
 {
 	char				*conversion;
 	char				*output;
@@ -57,7 +57,7 @@ int							ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (*format)
 	{
-		if (!(output = get_output_by_format(args, parse_format(args, &format))))
+		if (!(output = output_by_format(args, parse_format(args, &format))))
 			break ;
 		write(1, output, ft_strlen(output));
 		output_len(1, ft_strlen(output));

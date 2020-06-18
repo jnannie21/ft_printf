@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/18 07:41:56 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/18 21:28:02 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ char				*strtolower(char *str);
 char				*u_itoa_base(unsigned long long n, int base);
 
 char				*integer_precision(char *result, const char *format);
+char				*string_precision(char *result, const char *format);
 char				*width(char *result, const char *format);
-
 char				*flag_numbersign(char *result, const char *format);
-char				*flag_plus_and_space(char *result, const char *format);
+char				*flag_plus_space(char *result, const char *format);
 char				*flag_minus(char *result, const char *format);
 char				*flag_zero(char *result, const char *format);
 char				*flag_space(char *result, const char *format);
+
+unsigned long long	read_unsigned_arg(va_list args, const char *format);
+long long			read_signed_arg(va_list args, const char *format);
 
 #endif

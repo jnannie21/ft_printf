@@ -6,14 +6,14 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 02:58:46 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/18 07:40:35 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/18 21:01:11 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 //#define HEX_DIGITS "0123456789abcdefABCDEF"
-#define PREFIXES "0 +-xX"
+#define PREFIXES "0+-xX"
 
 static void				strcpytoend(char *dest, const char *src)
 {
@@ -25,7 +25,7 @@ static void				strcpytoend(char *dest, const char *src)
 	ft_memcpy(dest + dest_len - src_len, src, src_len);
 }
 
-static char				*fill_with_filler(char *result, size_t length,
+static char				*fill_in(char *result, size_t length,
 										char *prefixes, char filler)
 {
 	char	*temp;
@@ -50,11 +50,30 @@ char					*integer_precision(char *result, const char *format)
 	size_t				precision;
 	int					negative;
 
+	if (!result)
+		return (0);
 	negative = (*result == '-');
 	if (!(precision_point = ft_strchr(format, '.')))
 		return (result);
 	precision = ft_atoi(precision_point + 1);
-	result = fill_with_filler(result, precision + negative, PREFIXES, '0');
+	result = fill_in(result, precision + negative, PREFIXES, '0');
+	return (result);
+}
+
+char					*string_precision(char *result, const char *format)
+{
+	char				*precision_point;
+	size_t				precision;
+	size_t				len;
+
+	if (!result)
+		return (0);
+	if (!(precision_point = ft_strchr(format, '.')))
+		return (result);
+	precision = ft_atoi(precision_point + 1);
+	len = ft_strlen(result);
+	if (precision < len)
+		ft_memset(result + precision, '\0', len - precision);
 	return (result);
 }
 
@@ -63,11 +82,13 @@ char					*width(char *result, const char *format)
 	char				*width_start;
 	size_t				width;
 
+	if (!result)
+		return (0);
 	if (!(width_start = ft_strpbrk(format, "123456789")) ||
 		*(width_start - 1) == '.')
 		return (result);
 	width = ft_atoi(width_start);
-	result = fill_with_filler(result, width, "", ' ');
+	result = fill_in(result, width, "", ' ');
 	return (result);
 }
 
@@ -81,10 +102,12 @@ static char					*attach_prefix(char *result, char *prefix)
 	return (result);
 }
 
-char					*flag_plus_and_space(char *result, const char *format)
+char					*flag_plus_space(char *result, const char *format)
 {
 	char		*prefix;
 
+	if (!result)
+		return (0);
 	prefix = "";
 	if (*result == '-')
 		return (result);
@@ -96,6 +119,8 @@ char					*flag_plus_and_space(char *result, const char *format)
 
 char					*flag_numbersign(char *result, const char *format)
 {
+	if (!result)
+		return (0);
 	if (ft_strchr(format, '#'))
 	{
 		if (ft_strpbrk(format, "x"))
@@ -111,6 +136,8 @@ char					*flag_minus(char *result, const char *format)
 	size_t		space_count;
 	size_t		result_len;
 
+	if (!result)
+		return (0);
 	if (ft_strchr(format, '-'))
 	{
 		space_count = ft_strspn(result, " ");
@@ -127,6 +154,8 @@ char					*flag_zero(char *result, const char *format)
 	char		*temp;
 	int			spaces;
 
+	if (!result)
+		return (0);
 	if (!(ft_strchr(format, '.')) &&
 		!(ft_strchr(format, '-')) &&
 		(search = ft_strpbrk(format, "1234567890")) &&
@@ -135,7 +164,7 @@ char					*flag_zero(char *result, const char *format)
 			temp = result;
 			spaces = ft_strspn(result, " ");
 			result = ft_strdup(result + spaces);
-			result = fill_with_filler(result, ft_strlen(temp), PREFIXES, '0');
+			result = fill_in(result, ft_strlen(temp), PREFIXES, '0');
 			free(temp);
 		}
 	return (result);
@@ -145,6 +174,8 @@ char					*flag_space(char *result, const char *format)
 {
 	char		*sign;
 
+	if (!result)
+		return (0);
 	if (ft_strchr(format, ' ') &&
 		(sign = ft_strchr(result, '+')))
 			*sign = ' ';

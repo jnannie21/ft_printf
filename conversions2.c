@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/15 18:03:04 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/18 21:51:14 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,16 @@ char						*ft_convert_c(va_list args, const char *format)
 	wc = (wint_t)va_arg(args, wint_t);
 	if (ft_strnstr(format, "l", ft_strlen(format)))
 	{
-		result = ft_calloc(UTF8_MAX_OCTETS + 1, sizeof(char));
-		ft_wctomb(result, wc);
+		if ((result = ft_calloc(UTF8_MAX_OCTETS + 1, sizeof(char))))
+			ft_wctomb(result, wc);
 	}
 	else
 	{
 		result = ft_calloc(2, sizeof(char));
 		result[0] = (unsigned char)wc;
 	}
+	result = width(result, format);
+	result = flag_minus(result, format);
 	return (result);
 }
 
@@ -37,24 +39,47 @@ char						*ft_convert_s(va_list args, const char *format)
 {
 	char		*result;
 
-	if (!args || !format)
-		return (0);
-	result = (char *)va_arg(args, char *);
-	return (ft_strdup(result));
+	result = ft_strdup((char *)va_arg(args, char *));
+	result = string_precision(result, format);
+	result = width(result, format);
+	result = flag_minus(result, format);
+	return (result);
 }
 
 char						*ft_convert_prcnt(va_list args, const char *format)
 {
+	char	*result;
+
 	if (!args || !format)
 		return (0);
-	return (ft_strdup("%"));
+	result = ft_strdup("%");
+	return (result);
 }
 
 char						*ft_convert_ptr(va_list args, const char *format)
 {
-	if (!args || !format)
-		return (0);
-	return (ft_convert_xX(args, "#llx"));
+	char				*result;
+	long long			arg;
+
+	arg = read_unsigned_arg(args, "ll");
+	if (arg == 0)
+	{
+		result  = ft_strdup("(nil)");
+		result = width(result, format);
+		result = flag_minus(result, format);
+		return (result);
+	}
+	if ((result = u_itoa_base(arg, 16)))
+		strtolower(result);
+	result = integer_precision(result, format);
+	if (arg != 0)
+		result = flag_numbersign(result, "#x");
+	result = flag_plus_space(result, format);
+	result = width(result, format);
+	result = flag_minus(result, format);
+	result = flag_zero(result, format);
+	result = flag_space(result, format);
+	return (result);
 }
 
 char						*ft_convert_n(va_list args, const char *format)
