@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/18 21:51:14 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/25 11:13:07 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char						*ft_convert_ptr(va_list args, const char *format)
 		strtolower(result);
 	result = integer_precision(result, format);
 	if (arg != 0)
-		result = flag_numbersign(result, "#x");
+		result = flag_numbersign_i(result, "#x");
 	result = flag_plus_space(result, format);
 	result = width(result, format);
 	result = flag_minus(result, format);

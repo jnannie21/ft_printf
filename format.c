@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 02:58:46 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/18 21:01:11 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/25 13:36:34 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ char					*integer_precision(char *result, const char *format)
 	if (!(precision_point = ft_strchr(format, '.')))
 		return (result);
 	precision = ft_atoi(precision_point + 1);
+	if (precision == 0 && *result == '0')
+	{
+		free(result);
+		result = ft_strdup("");
+	}
 	result = fill_in(result, precision + negative, PREFIXES, '0');
 	return (result);
 }
@@ -74,6 +79,20 @@ char					*string_precision(char *result, const char *format)
 	len = ft_strlen(result);
 	if (precision < len)
 		ft_memset(result + precision, '\0', len - precision);
+	return (result);
+}
+
+char					*double_precision(char *result, const char *format)
+{
+	char				*precision_point;
+	size_t				precision;
+
+	if (!result)
+		return (0);
+	if (!(precision_point = ft_strchr(format, '.')))
+		return (result);
+	precision = ft_atoi(precision_point + 1);
+	result = fill_in(result, precision, PREFIXES, '0');
 	return (result);
 }
 
@@ -117,7 +136,7 @@ char					*flag_plus_space(char *result, const char *format)
 	return (attach_prefix(result, prefix));
 }
 
-char					*flag_numbersign(char *result, const char *format)
+char					*flag_numbersign_i(char *result, const char *format)
 {
 	if (!result)
 		return (0);
@@ -129,6 +148,19 @@ char					*flag_numbersign(char *result, const char *format)
 			result = attach_prefix(result, "0X");
 	}
 	return (result);
+}
+
+char					*flag_numbersign_f(char *result, const char *format)
+{
+	char		*temp;
+
+	if (!result)
+		return (0);
+	if (!ft_strchr(format, '#') || ft_strchr(result, '.'))
+		return (result);
+	temp = ft_strjoin(result, ".");
+	free(result);
+	return (temp);
 }
 
 char					*flag_minus(char *result, const char *format)
@@ -156,9 +188,10 @@ char					*flag_zero(char *result, const char *format)
 
 	if (!result)
 		return (0);
-	if (!(ft_strchr(format, '.')) &&
-		!(ft_strchr(format, '-')) &&
-		(search = ft_strpbrk(format, "1234567890")) &&
+	if ((ft_strchr(format, '.') && ft_strpbrk(format, "diuxX")) ||
+		ft_strchr(format, '-'))
+		return (result);
+	if ((search = ft_strpbrk(format, "1234567890")) &&
 		*search == '0')
 		{
 			temp = result;
