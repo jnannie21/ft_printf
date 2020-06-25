@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/25 14:44:46 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/25 15:08:49 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,17 @@ static char				*special_cases(double d)
 	return (0);
 }
 
+static double			process_negative(double d, char **temp)
+{
+	if (d < 0 || d == -0.0)
+	{
+		**temp = '-';
+		(*temp)++;
+		d *= (-1);
+	}
+	return (d);
+}
+
 char					*ft_ftoa(double d, unsigned int precision)
 {
 	char			*result;
@@ -60,11 +71,7 @@ char					*ft_ftoa(double d, unsigned int precision)
 	len = integer_len(d) + precision;
 	result = ft_calloc(len + (d < 0) + (precision > 0) + 1, sizeof(char));
 	temp = result;
-	if (d < 0)
-	{
-		*temp++ = '-';
-		d *= (-1);
-	}
+	d = process_negative(d, &temp);
 	pow = ft_pow10(len - precision - 1);
 	while (len--)
 	{

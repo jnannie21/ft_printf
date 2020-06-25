@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:09:07 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/25 14:32:27 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/25 15:12:32 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ size_t						output_len(int increase, size_t l)
 	return (temp);
 }
 
-int							is_double_special(double d)
+int							double_is_special(double d)
 {
 	if (d == 1.0 / 0.0 ||
 		d == -1.0 / 0.0 ||

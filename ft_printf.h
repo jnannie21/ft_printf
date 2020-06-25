@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/25 14:35:54 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/25 15:12:39 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char				*parse_format(va_list args, const char **format);
 char				*strtolower(char *str);
 char				*u_itoa_base(unsigned long long n, int base);
 size_t				output_len(int set, size_t l);
-int					is_double_special(double d);
+int					double_is_special(double d);
 
 char				*integer_precision(char *result, const char *format);
 char				*string_precision(char *result, const char *format);
