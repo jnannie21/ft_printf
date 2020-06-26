@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/26 15:42:12 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/26 16:25:06 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,24 @@ char					*ft_ftoa(double d, int precision)
 	char			*result;
 	char			*temp;
 	int				digit;
-	int				len;
-	int				integers;
+	int				sum_len;
+	int				integer_len;
 
 	if ((result = special_cases(d)))
 		return (result);
-	if ((integers = count_exp10(d) + 1) <= 0)
-		integers = 1;
-	len = integers + precision;
-	result = ft_calloc(len + (d < 0) + (precision > 0) + 1, sizeof(char));
+	if ((integer_len = count_exp10(d) + 1) <= 0)
+		integer_len = 1;
+	sum_len = integer_len + precision;
+	result = ft_calloc(sum_len + (d < 0) + (precision > 0) + 1, sizeof(char));
 	temp = result;
 	d = process_negative(d, &temp);
-	d = d / ft_pow10(len - precision);
-	while (len--)
+	d = d / ft_pow10(sum_len - precision);
+	while (sum_len--)
 	{
 		d *= 10;
 		digit = d;
 		*temp++ = digit + '0';
-		if (precision && len == precision)
+		if (precision && sum_len == precision)
 			*temp++ = '.';
 		d -= digit;
 	}
