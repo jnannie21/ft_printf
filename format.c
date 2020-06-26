@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 02:58:46 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/25 13:36:34 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/26 07:33:56 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char				*fill_in(char *result, size_t length,
 char					*integer_precision(char *result, const char *format)
 {
 	char				*precision_point;
-	size_t				precision;
+	int					precision;
 	int					negative;
 
 	if (!result)
@@ -108,16 +108,6 @@ char					*width(char *result, const char *format)
 		return (result);
 	width = ft_atoi(width_start);
 	result = fill_in(result, width, "", ' ');
-	return (result);
-}
-
-static char					*attach_prefix(char *result, char *prefix)
-{
-	char	*temp;
-
-	temp = result;
-	result = ft_strjoin(prefix, result);
-	free(temp);
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:09:07 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/25 15:12:32 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/26 15:23:17 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,51 @@ size_t						output_len(int increase, size_t l)
 	return (temp);
 }
 
-int							double_is_special(double d)
+int							is_special_case(double d)
 {
 	if (d == 1.0 / 0.0 ||
 		d == -1.0 / 0.0 ||
 		d != d)
 		return (1);
 	return (0);
+}
+
+char						*attach_prefix(char *result, char *prefix)
+{
+	char	*temp;
+
+	temp = result;
+	result = ft_strjoin(prefix, result);
+	free(temp);
+	return (result);
+}
+/*
+unsigned int				count_ranks(double d)
+{
+	unsigned int	len;
+
+	len = 1;
+	if (d < 0)
+		d *= (-1);
+	while ((d /= 10) >= 1)
+		len++;
+	return (len);
+}
+*/
+int							count_exp10(double d)
+{
+	int		pow;
+
+	if (d == 0)
+		return (0);
+	if (d < 0)
+		d *= (-1);
+	pow = 0 - (d < 1);
+	if (d >= 1)
+		while ((d /= 10) >= 1)
+			pow++;
+	else
+		while ((d *= 10) < 1)
+			pow--;
+	return (pow);
 }
