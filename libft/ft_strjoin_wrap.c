@@ -1,46 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strjoin_wrap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/10 14:52:39 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/27 06:14:00 by jnannie          ###   ########.fr       */
+/*   Created: 2020/06/27 10:28:51 by jnannie           #+#    #+#             */
+/*   Updated: 2020/06/27 10:29:56 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-/*
-static long		ft_pow10(int n)
+
+char						*ft_strjoin_wrap(char *str1, char *str2)
 {
-	long		res;
+	char	*result;
 
-	res = 1;
-	while (n--)
-		res *= 10;
-	return (res);
-}
-*/
-static int		count_num(int n)
-{
-	int		num;
-
-	num = 1;
-	while (n / ft_pow10(num) != 0)
-		num++;
-	return (num);
-}
-
-void			ft_putnbr_fd(int n, int fd)
-{
-	int		num;
-
-	num = count_num(n);
-	if (n >= 0)
-		n *= (-1);
-	else
-		ft_putchar_fd('-', fd);
-	while (num--)
-		ft_putchar_fd((-1) * ((int)(n / ft_pow10(num)) % 10 - 48), fd);
+	result = ft_strjoin(str1, str2);
+	free(str1);
+	free(str2);
+	return (result);
 }

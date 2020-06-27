@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:09:07 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/26 15:23:17 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/27 18:55:14 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,6 @@ int							is_special_case(double d)
 	return (0);
 }
 
-char						*attach_prefix(char *result, char *prefix)
-{
-	char	*temp;
-
-	temp = result;
-	result = ft_strjoin(prefix, result);
-	free(temp);
-	return (result);
-}
 /*
 unsigned int				count_ranks(double d)
 {
@@ -104,4 +95,31 @@ int							count_exp10(double d)
 		while ((d *= 10) < 1)
 			pow--;
 	return (pow);
+}
+
+static void				strcpytoend(char *dest, const char *src)
+{
+	size_t		dest_len;
+	size_t		src_len;
+
+	dest_len = ft_strlen(dest);
+	src_len = ft_strlen(src);
+	ft_memcpy(dest + dest_len - src_len, src, src_len);
+}
+
+char					*fill_in(char *result, int pos,
+								size_t length, char filler)
+{
+	char	*temp;
+
+	if (length <= ft_strlen(result))
+		return (result);
+	temp = result;
+	if (!(result = ft_calloc(length + 1, sizeof(char))))
+		return (0);
+	ft_memset(result, filler, length);
+	strcpytoend(result, temp + pos);
+	ft_memcpy(result, temp, pos);
+	free(temp);
+	return (result);
 }

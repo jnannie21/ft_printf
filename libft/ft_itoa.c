@@ -6,14 +6,14 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 04:25:28 by jnannie           #+#    #+#             */
-/*   Updated: 2020/05/14 18:04:52 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/27 10:52:20 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 #define MININTVALUE -2147483648
-
+/*
 static long		ft_pow10(int n)
 {
 	long		res;
@@ -23,13 +23,13 @@ static long		ft_pow10(int n)
 		res *= 10;
 	return (res);
 }
-
+*/
 static int		count_num(int n)
 {
 	int		num;
 
 	num = 1;
-	while (n / ft_pow10(num) != 0)
+	while ((int)(n / ft_pow10(num)) != 0)
 		num++;
 	return (num);
 }
@@ -58,7 +58,7 @@ char			*ft_itoa(int n)
 	}
 	i = is_negative;
 	while (num--)
-		s[i++] = (n / ft_pow10(num)) % 10 + 48;
+		s[i++] = ((int)(n / ft_pow10(num))) % 10 + 48;
 	s[i] = '\0';
 	return (s);
 }

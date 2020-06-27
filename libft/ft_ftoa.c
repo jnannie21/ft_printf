@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/26 16:25:06 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/27 06:31:08 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,24 @@ static double			process_negative(double d, char **temp)
 		d *= (-1);
 	}
 	return (d);
+}
+
+static int				count_exp10(double d)
+{
+	int		pow;
+
+	if (d == 0)
+		return (0);
+	if (d < 0)
+		d *= (-1);
+	pow = 0 - (d < 1);
+	if (d >= 1)
+		while ((d /= 10) >= 1)
+			pow++;
+	else
+		while ((d *= 10) < 1)
+			pow--;
+	return (pow);
 }
 
 char					*ft_ftoa(double d, int precision)
