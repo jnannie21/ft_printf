@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/27 18:55:52 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/28 16:02:52 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char				*ft_convert_ptr(va_list args, const char *format);
 char				*ft_convert_n(va_list args, const char *format);
 char				*ft_convert_f(va_list args, const char *format);
 char				*ft_convert_e(va_list args, const char *format);
+char				*ft_convert_g(va_list args, const char *format);
 
 char				*parse_format(va_list args, const char **format);
 
@@ -41,7 +42,7 @@ int					is_special_case(double d);
 char				*attach_prefix(char *result, char *prefix);
 int					count_exp10(double d);
 char				*fill_in(char *result, int pos,
-						size_t length, char filler);
+							unsigned int length, char filler);
 
 char				*integer_precision(char *result, const char *format);
 char				*string_precision(char *result, const char *format);

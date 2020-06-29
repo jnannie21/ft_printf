@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:09:07 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/27 18:55:14 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/29 10:39:19 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char					*strtolower(char *str)
 	return (str);
 }
 
-size_t						output_len(int increase, size_t l)
+size_t					output_len(int increase, size_t l)
 {
 	static size_t		len;
 	size_t				temp;
@@ -57,7 +57,7 @@ size_t						output_len(int increase, size_t l)
 	return (temp);
 }
 
-int							is_special_case(double d)
+int						is_special_case(double d)
 {
 	if (d == 1.0 / 0.0 ||
 		d == -1.0 / 0.0 ||
@@ -79,11 +79,11 @@ unsigned int				count_ranks(double d)
 	return (len);
 }
 */
-int							count_exp10(double d)
+int						count_exp10(double d)
 {
 	int		pow;
 
-	if (d == 0)
+	if (is_special_case(d) || d == 0)
 		return (0);
 	if (d < 0)
 		d *= (-1);
@@ -108,7 +108,7 @@ static void				strcpytoend(char *dest, const char *src)
 }
 
 char					*fill_in(char *result, int pos,
-								size_t length, char filler)
+								unsigned int length, char filler)
 {
 	char	*temp;
 
