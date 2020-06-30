@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/28 16:02:52 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/30 21:43:57 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define CONVERSIONS "cspdiuxX%nfge"
 
 int					ft_printf(const char *format, ...);
+size_t				output_len(int set, size_t l);
+char				*parse_format(va_list args, const char **format);
 
 char				*ft_convert_di(va_list args, const char *format_str);
 char				*ft_convert_u(va_list args, const char *format);
@@ -33,11 +35,8 @@ char				*ft_convert_f(va_list args, const char *format);
 char				*ft_convert_e(va_list args, const char *format);
 char				*ft_convert_g(va_list args, const char *format);
 
-char				*parse_format(va_list args, const char **format);
-
 char				*strtolower(char *str);
 char				*u_itoa_base(unsigned long long n, int base);
-size_t				output_len(int set, size_t l);
 int					is_special_case(double d);
 char				*attach_prefix(char *result, char *prefix);
 int					count_exp10(double d);
@@ -56,5 +55,15 @@ char				*flag_space(char *result, const char *format);
 
 unsigned long long	read_unsigned_arg(va_list args, const char *format);
 long long			read_signed_arg(va_list args, const char *format);
+
+int					read_precision(const char *format);
+double				round_float(double arg, int precision);
+char				*ftoa_with_precision(double arg, const char *format);
+char				*addexp(char *result, int pw10);
+char				*remove_insignificant_zeros(char *result);
+int					is_exp_form(double arg, const char *format);
+int					g_precision(double arg, const char *format);
+char				*ftoa_g_conversion(double arg, const char *format);
+
 
 #endif

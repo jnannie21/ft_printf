@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:09:07 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/29 10:39:19 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/30 21:31:34 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,6 @@ char					*strtolower(char *str)
 		i++;
 	}
 	return (str);
-}
-
-size_t					output_len(int increase, size_t l)
-{
-	static size_t		len;
-	size_t				temp;
-
-	temp = len;
-	if (increase)
-		len += l;
-	else
-		len = l;
-	return (temp);
 }
 
 int						is_special_case(double d)

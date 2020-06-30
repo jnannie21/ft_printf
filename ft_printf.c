@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/28 10:34:15 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/30 21:31:29 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ static conversion_func		*get_conversions(void)
 		conversions['g'] = ft_convert_g;
 	}
 	return (conversions);
+}
+
+size_t					output_len(int increase, size_t l)
+{
+	static size_t		len;
+	size_t				temp;
+
+	temp = len;
+	if (increase)
+		len += l;
+	else
+		len = l;
+	return (temp);
 }
 
 static char					*output_by_format(va_list args, char *format)

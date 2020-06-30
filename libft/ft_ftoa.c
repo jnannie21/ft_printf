@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/27 06:31:08 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/06/30 13:44:17 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 #define MINUS_ZERO 0x8000000000000000
 #define POSITIVE_INFINITY 0x7FF0000000000000
 #define NEGATIVE_INFINITY 0xFFF0000000000000
-#define MIN_NAN 0x7FF0000000000001
-#define MAX_NAN 0x7FFFFFFFFFFFFFFF
+#define MIN_PNAN 0x7FF0000000000001
+#define MAX_PNAN 0x7FFFFFFFFFFFFFFF
+#define MIN_NNAN 0xFFF0000000000001
+#define MAX_NNAN 0xFFFFFFFFFFFFFFFF
 
 static char				*special_cases(double d)
 {
@@ -24,9 +26,12 @@ static char				*special_cases(double d)
 		return (ft_strdup("inf"));
 	else if (*((unsigned long *)&d) == NEGATIVE_INFINITY)
 		return (ft_strdup("-inf"));
-	else if (*((unsigned long *)&d) >= MIN_NAN &&
-			*((unsigned long *)&d) <= MAX_NAN)
+	else if (*((unsigned long *)&d) >= MIN_PNAN &&
+			*((unsigned long *)&d) <= MAX_PNAN)
 		return (ft_strdup("nan"));
+	else if (*((unsigned long *)&d) >= MIN_NNAN &&
+			*((unsigned long *)&d) <= MAX_NNAN)
+		return (ft_strdup("-nan"));
 	return (0);
 /*
 	if (d == 1.0 / 0.0)
