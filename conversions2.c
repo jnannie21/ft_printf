@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/01 11:05:11 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/01 11:39:52 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,13 @@ char						*ft_convert_s(va_list args, const char *format)
 	char		*result;
 
 	if (!(result = (char *)va_arg(args, char *)))
+	{
 		result = ft_strdup("(null)");
-	result = ft_strdup(result);
+		if (read_precision(format) < 6)
+			*result = '\0';
+	}
+	else
+		result = ft_strdup(result);
 	result = string_precision(result, format);
 	result = width(result, format);
 	result = flag_minus(result, format);
