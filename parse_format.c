@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 01:53:42 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/18 20:47:38 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/01 19:25:40 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void				parse_len_conversion(char **temp, const char **format)
 		{
 			if (length_modifiers_len > 2)
 				length_modifiers_len = 2;
-			*format += length_modifiers_len;
+			*format += length_modifiers_len - (**format != *(*format + 1));
 			return ;
 		}
 	while (**format && ft_strchr(LENGTH_MODIFIERS, **format))
