@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 16:44:57 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 17:39:31 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int						ft_convert_c(t_format *sf)
 {
 	char		*result;
 	wint_t		wc;
+	int			len;
+	int			char_len;
 
 	wc = (wint_t)va_arg(sf->args, wint_t);
 	if (sf->len_mod == 'l')
@@ -30,14 +32,14 @@ int						ft_convert_c(t_format *sf)
 		result = ft_calloc(2, sizeof(char));
 		result[0] = (unsigned char)wc;
 	}
+	char_len = ft_strlen(result);
 	result = width(result, sf);
 	result = flag_minus(result, sf);
-	if (result && !(ft_strlen(result)))
-	{
-		sf->len++;
-		return (write(1, result, 1));
-	}
-	return (print_result(result, sf));
+	if (!result)
+		return (-1);
+	len = ft_strlen(result);
+	sf->len += len - char_len + 1;
+	return (write(1, result, len + !char_len));
 }
 
 int						ft_convert_s(t_format *sf)
