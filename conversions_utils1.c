@@ -6,11 +6,22 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:09:07 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/01 09:48:17 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 15:00:47 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int						print_result(char *result, t_format *sf)
+{
+	int					len;
+
+	len = -1;
+	if (result)
+		len = write(1, result, ft_strlen(result));
+	sf->len += len;
+	return (len);
+}
 
 char					*u_itoa_base(unsigned long long n, int base)
 {

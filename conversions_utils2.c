@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/30 21:35:37 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 16:29:21 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define DEFAULT_PRECISION 6
 #define MAXINT 2147483647
-
+/*
 int			read_precision(const char *format)
 {
 	int					precision;
@@ -25,7 +25,7 @@ int			read_precision(const char *format)
 		precision = ft_atoi(precision_point + 1);
 	return (precision);
 }
-
+*/
 double		round_float(double arg, int precision)
 {
 	double				arg_pow;
@@ -53,27 +53,23 @@ double		round_float(double arg, int precision)
 	return (arg);
 }
 
-char			*ftoa_with_precision(double arg, const char *format)
+char			*ftoa_with_precision(double arg, int precision)
 {
-	int					precision;
 	char				*result;
 
-	precision = read_precision(format);
 	arg = round_float(arg, precision);
 	result = ft_ftoa(arg, precision);
-//	if (precision == 0 && ft_strchr(result, '.'))
-//		*(ft_strchr(result, '.')) = '\0';
 	return (result);
 }
 
-char			*addexp(char *result, int pw10)
+char			*addexp(char *result, int ex10)
 {
 	char		*strexp;
 
-	strexp = ft_itoa(pw10);
+	strexp = ft_itoa(ex10);
 	if (*strexp != '-')
 		strexp = ft_strjoin_wrap(ft_strdup("+"), strexp);
-	if (pw10 <= 9 && pw10 >= -9)
+	if (ex10 <= 9 && ex10 >= -9)
 		strexp = fill_in(strexp, 1, ft_strlen(strexp) + 1, '0');
 	result = ft_strjoin_wrap(result, ft_strdup("e"));
 	result = ft_strjoin_wrap(result, strexp);
@@ -105,46 +101,33 @@ char			*remove_insignificant_zeros(char *result)
 	return (result);
 }
 
-int			is_exp_form(double arg, const char *format)
+int			is_exp_form(int ex10, int precision)
 {
-	int					precision;
-	int					ex10;
 
-	ex10 = count_exp10(arg);
-	if (!(precision = read_precision(format)))
-		precision++;
 	if (ex10 && (ex10 < -4 || ex10 >= precision))
 		return (1);
 	return (0);
 }
 
-int			g_precision(double arg, const char *format)
+int			g_precision(int ex10, int precision)
 {
-	int					precision;
-	int					ex10;
-
-	if (!(precision = read_precision(format)))
-		precision++;
-	ex10 = count_exp10(arg);
-	//if ((ex10 >= -4 && ex10 < precision))
-	if (!is_exp_form(arg, format))
+	if (!is_exp_form(ex10, precision))
 		precision = precision - ex10 - 1;
 	else if (precision)
 		precision--;
 	return (precision);
 }
 
-char			*ftoa_g_conversion(double arg, const char *format)
+char			*ftoa_g_conversion(double arg, t_format *sf)
 {
 	int					precision;
 	int					ex10;
 	char				*result;
 
 	ex10 = count_exp10(arg);
-	precision = g_precision(arg, format);
-	if (is_exp_form(arg, format))
+	precision = g_precision(ex10, sf->precision);
+	if (is_exp_form(ex10, sf->precision))
 		arg = arg / ft_pow10(ex10);
-	format = ft_strjoin_wrap(ft_strdup("."), ft_itoa(precision));
-	result = ftoa_with_precision(arg, format);
+	result = ftoa_with_precision(arg, precision);
 	return (result);
 }

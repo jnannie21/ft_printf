@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/30 21:43:57 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 16:26:37 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,43 @@
 # include <wchar.h>
 
 # define CONVERSIONS "cspdiuxX%nfge"
+# define DEC_DIGITS "1234567890"
+# define LENGTH_H 1
+# define LENGTH_HH 2
+# define LENGTH_L 3
+# define LENGTH_LL 4
+
+typedef	struct		s_format
+{
+	char			*format;
+	va_list			args;
+	int				len;
+	int				width;
+	int				precision;
+	int				flagalter;
+	int				flagplus;
+	int				flagminus;
+	int				flagzero;
+	int				flagspace;
+	int				len_mod;
+	char			conversion;
+}					t_format;
 
 int					ft_printf(const char *format, ...);
-size_t				output_len(int set, size_t l);
-char				*parse_format(va_list args, const char **format);
+//size_t				output_len(int set, size_t l);
+void				parse_format(t_format *sf);
 
-char				*ft_convert_di(va_list args, const char *format_str);
-char				*ft_convert_u(va_list args, const char *format);
-char				*ft_convert_xX(va_list args, const char *format);
-char				*ft_convert_c(va_list args, const char *format);
-char				*ft_convert_s(va_list args, const char *format);
-char				*ft_convert_prcnt(va_list args, const char *format);
-char				*ft_convert_ptr(va_list args, const char *format);
-char				*ft_convert_n(va_list args, const char *format);
-char				*ft_convert_f(va_list args, const char *format);
-char				*ft_convert_e(va_list args, const char *format);
-char				*ft_convert_g(va_list args, const char *format);
+int					ft_convert_di(t_format *sf);
+int					ft_convert_u(t_format *sf);
+int					ft_convert_xX(t_format *sf);
+int					ft_convert_c(t_format *sf);
+int					ft_convert_s(t_format *sf);
+int					ft_convert_prcnt(t_format *sf);
+int					ft_convert_ptr(t_format *sf);
+int					ft_convert_n(t_format *sf);
+int					ft_convert_f(t_format *sf);
+int					ft_convert_e(t_format *sf);
+int					ft_convert_g(t_format *sf);
 
 char				*strtolower(char *str);
 char				*u_itoa_base(unsigned long long n, int base);
@@ -42,28 +63,28 @@ char				*attach_prefix(char *result, char *prefix);
 int					count_exp10(double d);
 char				*fill_in(char *result, int pos,
 							unsigned int length, char filler);
+int					print_result(char *result, t_format *sf);
 
-char				*integer_precision(char *result, const char *format);
-char				*string_precision(char *result, const char *format);
-char				*width(char *result, const char *format);
-char				*flag_numbersign_i(char *result, const char *format);
-char				*flag_numbersign_f(char *result, const char *format);
-char				*flag_plus_space(char *result, const char *format);
-char				*flag_minus(char *result, const char *format);
-char				*flag_zero(char *result, const char *format);
-char				*flag_space(char *result, const char *format);
+char				*integer_precision(char *result, t_format *sf);
+char				*string_precision(char *result, t_format *sf);
+char				*width(char *result, t_format *sf);
+char				*flag_alter_i(char *result, t_format *sf);
+char				*flag_alter_f(char *result, t_format *sf);
+char				*flag_plus_space(char *result, t_format *sf);
+char				*flag_minus(char *result, t_format *sf);
+char				*flag_zero(char *result, t_format *sf);
+char				*flag_space(char *result, t_format *sf);
 
-unsigned long long	read_unsigned_arg(va_list args, const char *format);
-long long			read_signed_arg(va_list args, const char *format);
+unsigned long long	read_unsigned_arg(t_format *sf);
+long long			read_signed_arg(t_format *sf);
 
 int					read_precision(const char *format);
 double				round_float(double arg, int precision);
-char				*ftoa_with_precision(double arg, const char *format);
-char				*addexp(char *result, int pw10);
+char				*ftoa_with_precision(double arg, int precision);
+char				*addexp(char *result, int ex10);
 char				*remove_insignificant_zeros(char *result);
-int					is_exp_form(double arg, const char *format);
-int					g_precision(double arg, const char *format);
-char				*ftoa_g_conversion(double arg, const char *format);
-
+int					is_exp_form(int ex10, int precision);
+int					g_precision(int ex10, int precision);
+char				*ftoa_g_conversion(double arg, t_format *sf);
 
 #endif

@@ -6,21 +6,34 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/30 21:31:29 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 16:42:17 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #define PRINTABLE 127
 
-typedef char *(*conversion_func)(va_list ,const char *);
+typedef int (*conversion_func)(t_format *);
+
+static int				print_regular_text(t_format *sf)
+{
+	int			len;
+	char		*prcnt;
+
+	prcnt = ft_strchrnul(sf->format, '%');
+	len = write(1, sf->format, prcnt - sf->format);
+	sf->format += len;
+	sf->len += len;
+	return (len);
+}
 
 static conversion_func		*get_conversions(void)
 {
 	static conversion_func	conversions[PRINTABLE];
 
-	if (!conversions['d'])
+	if (!conversions['\0'])
 	{
+		conversions['\0'] = print_regular_text;
 		conversions['d'] = ft_convert_di;
 		conversions['i'] = ft_convert_di;
 		conversions['u'] = ft_convert_u;
@@ -38,49 +51,51 @@ static conversion_func		*get_conversions(void)
 	return (conversions);
 }
 
-size_t					output_len(int increase, size_t l)
+static int					process_format(t_format *sf)
 {
-	static size_t		len;
-	size_t				temp;
-
-	temp = len;
-	if (increase)
-		len += l;
-	else
-		len = l;
-	return (temp);
-}
-
-static char					*output_by_format(va_list args, char *format)
-{
-	char				*conversion;
-	char				*output;
-
-	if (!format ||
-		*format != '%' ||
-		!(conversion = ft_strpbrk(format + 1, CONVERSIONS)))
-		return ((char *)format);
-	output = get_conversions()[(int)*conversion](args, format);
-	free(format);
-	return (output);
-}
-
-int							ft_printf(const char *format, ...)
-{
-	va_list		args;
-	char		*output;
-
-	va_start(args, format);
-	while (*format)
+	if (!sf->conversion)
 	{
-		if (!(output = output_by_format(args, parse_format(args, &format))))
-			break ;
-		write(1, output, ft_strlen(output));
-		output_len(1, ft_strlen(output));
-		free(output);
+		if (print_regular_text(sf) == -1)
+			return (0);
+		return (1);
 	}
-	va_end(args);
-	if (*format != '\0')
+	return (get_conversions()[(int)sf->conversion](sf));
+}
+
+static void				init_sf(t_format *form)
+{
+	form->width = 0;
+	form->precision = -1;
+	form->flagalter = 0;
+	form->flagplus = 0;
+	form->flagminus = 0;
+	form->flagzero = 0;
+	form->flagspace = 0;
+	form->len_mod = 0;
+	form->conversion = '\0';
+}
+
+int						ft_printf(const char *format, ...)
+{
+	t_format	*sf;
+	size_t		len;
+
+	if (!(sf = malloc(sizeof(t_format))))
 		return (-1);
-	return (output_len(0, 0));
+	va_start(sf->args, format);
+	sf->len = 0;
+	sf->format = (char *)format;
+	while (*(sf->format))
+	{
+		init_sf(sf);
+		parse_format(sf);
+		if (process_format(sf) == -1)
+			break ;
+	}
+	va_end(sf->args);
+	len = sf->len;
+	if (*(sf->format) != '\0')
+		len = -1;
+	free(sf);
+	return (len);
 }
