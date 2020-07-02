@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 02:58:46 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 16:28:55 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 20:51:36 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char					*flag_alter_f(char *result, t_format *sf)
 
 	if (!result)
 		return (0);
-	if (!sf->flagalter || sf->precision >= 0)
+	if (!sf->flagalter || sf->precision > 0)
 		return (result);
 	temp = ft_strjoin(result, ".");
 	free(result);

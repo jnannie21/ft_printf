@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 19:51:20 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 20:46:10 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,7 @@
 
 #define DEFAULT_PRECISION 6
 #define MAXINT 2147483647
-/*
-int			read_precision(const char *format)
-{
-	int					precision;
-	char				*precision_point;
 
-	precision = DEFAULT_PRECISION;
-	if ((precision_point = ft_strchr(format, '.')))
-		precision = ft_atoi(precision_point + 1);
-	return (precision);
-}
-*/
 double		round_float(double arg, int precision)
 {
 	double				arg_pow;
@@ -45,11 +34,11 @@ double		round_float(double arg, int precision)
 	if (arg < 0)
 		del = -0.5;
 	arg_pow = ft_pow10(precision);
-	del = del / arg_pow;
-	arg = arg + del;
+	arg = arg * arg_pow + del;
 	argl = arg;
-	if (arg != (double)argl && (int)((arg - argl) * arg_pow * 10) == 0)
-		arg = arg - ((int)((arg - argl) * arg_pow) % 2) / arg_pow;
+	if ((int)((arg - argl) * 10) == 0)
+		arg = arg - (argl % 10) % 2;
+	arg /= arg_pow;
 	return (arg);
 }
 
