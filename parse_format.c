@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 01:53:42 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 16:48:26 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 19:20:27 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ static void				parse_width(t_format *sf)
 	if (*sf->format == '*')
 	{
 		sf->width = (int)(va_arg(sf->args, int));
+		if (sf->width < 0)
+		{
+			sf->width *= (-1);
+			sf->flagminus = 1;
+		}
 		sf->format++;
 	}
 	else
