@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 17:52:56 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 18:25:26 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 #define UTF8_MAX_OCTETS 4
 
-int						ft_convert_c(t_format *sf)
+static char				*convert_c_length(t_format *sf)
 {
 	char		*result;
 	wint_t		wc;
-	int			len;
-	int			char_len;
 
 	wc = (wint_t)va_arg(sf->args, wint_t);
 	if (sf->len_mod == 'l')
@@ -32,6 +30,17 @@ int						ft_convert_c(t_format *sf)
 		result = ft_calloc(2, sizeof(char));
 		result[0] = (unsigned char)wc;
 	}
+	return (result);
+}
+
+int						ft_convert_c(t_format *sf)
+{
+	char		*result;
+	int			len;
+	int			char_len;
+
+
+	result = convert_c_length(sf);
 	char_len = ft_strlen(result);
 	result = width(result, sf);
 	result = flag_minus(result, sf);
@@ -39,6 +48,8 @@ int						ft_convert_c(t_format *sf)
 		return (-1);
 	if (!(len = ft_strlen(result)))
 		len++;
+	else if (!char_len)
+		*(ft_strchrnul(result, '\0') - 1) = '\0';
 	sf->len += len - char_len + (char_len > 0);
 	return (write(1, result, len));
 }

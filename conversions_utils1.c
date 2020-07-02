@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:09:07 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 15:00:47 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 18:02:31 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int						print_result(char *result, t_format *sf)
 	len = -1;
 	if (result)
 		len = write(1, result, ft_strlen(result));
+	free(result);
 	sf->len += len;
 	return (len);
 }
