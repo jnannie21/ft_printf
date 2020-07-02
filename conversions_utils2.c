@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 20:46:10 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 21:06:17 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 double		round_float(double arg, int precision)
 {
 	double				arg_pow;
-	long				argl;
+//	long				argl;
 	double				del;
 	int					ex10;
 
@@ -35,9 +35,9 @@ double		round_float(double arg, int precision)
 		del = -0.5;
 	arg_pow = ft_pow10(precision);
 	arg = arg * arg_pow + del;
-	argl = arg;
-	if ((int)((arg - argl) * 10) == 0)
-		arg = arg - (argl % 10) % 2;
+//	argl = arg;
+//	if ((int)((arg - argl) * 10) == 0)
+//		arg = arg - (argl % 10) % 2;
 	arg /= arg_pow;
 	return (arg);
 }
