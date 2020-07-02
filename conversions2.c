@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 17:39:31 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 17:52:56 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ int						ft_convert_c(t_format *sf)
 	result = flag_minus(result, sf);
 	if (!result)
 		return (-1);
-	len = ft_strlen(result);
-	sf->len += len - char_len + 1;
-	return (write(1, result, len + !char_len));
+	if (!(len = ft_strlen(result)))
+		len++;
+	sf->len += len - char_len + (char_len > 0);
+	return (write(1, result, len));
 }
 
 int						ft_convert_s(t_format *sf)
