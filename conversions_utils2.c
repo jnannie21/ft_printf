@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 16:29:21 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 19:51:20 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char			*ftoa_with_precision(double arg, int precision)
 {
 	char				*result;
 
-	arg = round_float(arg, precision);
+	if (arg != 0)
+		arg = round_float(arg, precision);
 	result = ft_ftoa(arg, precision);
 	return (result);
 }

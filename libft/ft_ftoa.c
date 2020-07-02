@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/30 13:44:17 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 19:43:33 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,6 @@ static char				*special_cases(double d)
 			*((unsigned long *)&d) <= MAX_NNAN)
 		return (ft_strdup("-nan"));
 	return (0);
-/*
-	if (d == 1.0 / 0.0)
-		return (ft_strdup("inf"));
-	else if (d == -1.0 / 0.0)
-		return (ft_strdup("-inf"));
-	else if (d != d)
-		return (ft_strdup("nan"));
-	return (0);
-*/
 }
 
 static double			process_negative(double d, char **temp)
