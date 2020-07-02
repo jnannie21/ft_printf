@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 19:11:06 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 19:33:45 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int						ft_convert_ptr(t_format *sf)
 	char				*result;
 	long long			arg;
 
+	sf->len_mod = 'l';
 	arg = read_unsigned_arg(sf);
 	if (arg == 0)
 	{
