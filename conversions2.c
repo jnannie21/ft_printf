@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 18:50:53 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/02 19:11:06 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int						ft_convert_s(t_format *sf)
 	if (!(result = (char *)va_arg(sf->args, char *)))
 	{
 		result = ft_strdup("(null)");
-		if (sf->precision < 6)
+		if (sf->precision >= 0 && sf->precision < 6)
 			*result = '\0';
 	}
 	else
