@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 02:58:46 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 20:51:36 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/03 15:34:18 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,8 @@ char					*flag_space(char *result, t_format *sf)
 	if (!result)
 		return (0);
 	if (sf->flagspace &&
-		(sign = ft_strchr(result, '+')))
+		(sign = ft_strpbrk(result, "+-")) &&
+		*sign == '+')
 			*sign = ' ';
 	return (result);
 }
