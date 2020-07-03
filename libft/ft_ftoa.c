@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 19:43:33 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/03 14:51:12 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,18 @@
 #define MIN_NNAN 0xFFF0000000000001
 #define MAX_NNAN 0xFFFFFFFFFFFFFFFF
 
-static char				*special_cases(double d)
+static char				*special_cases(long double d)
 {
+	if (d == 1.0 / 0.0)
+		return (ft_strdup("inf"));
+	else if (d == - 1.0 / 0.0)
+		return (ft_strdup("-inf"));
+	else if (d == 0.0 / 0.0)
+		return (ft_strdup("nan"));
+	else if (d == 0.0 / 0.0 * (-1))
+		return (ft_strdup("-nan"));
+	return (0);
+	/*
 	if (*((unsigned long *)&d) == POSITIVE_INFINITY)
 		return (ft_strdup("inf"));
 	else if (*((unsigned long *)&d) == NEGATIVE_INFINITY)
@@ -33,6 +43,7 @@ static char				*special_cases(double d)
 			*((unsigned long *)&d) <= MAX_NNAN)
 		return (ft_strdup("-nan"));
 	return (0);
+*/
 }
 
 static double			process_negative(double d, char **temp)
@@ -80,15 +91,15 @@ char					*ft_ftoa(double d, int precision)
 	result = ft_calloc(sum_len + (d < 0) + (precision > 0) + 1, sizeof(char));
 	temp = result;
 	d = process_negative(d, &temp);
-	d = d / ft_pow10(sum_len - precision);
+	d = d / ft_pow10(sum_len - precision - 1);
 	while (sum_len--)
 	{
-		d *= 10;
 		digit = d;
 		*temp++ = digit + '0';
 		if (precision && sum_len == precision)
 			*temp++ = '.';
 		d -= digit;
+		d *= 10;
 	}
 	return (result);
 }

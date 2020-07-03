@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 16:26:37 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/03 14:39:47 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int					ft_convert_g(t_format *sf);
 
 char				*strtolower(char *str);
 char				*u_itoa_base(unsigned long long n, int base);
-int					is_special_case(double d);
+int					is_special_case(long double d);
 char				*attach_prefix(char *result, char *prefix);
-int					count_exp10(double d);
+int					count_exp10(long double d);
 char				*fill_in(char *result, int pos,
 							unsigned int length, char filler);
 int					print_result(char *result, t_format *sf);
@@ -80,11 +80,11 @@ long long			read_signed_arg(t_format *sf);
 
 int					read_precision(const char *format);
 double				round_float(double arg, int precision);
-char				*ftoa_with_precision(double arg, int precision);
+char				*convert_float(double arg, t_format *sf);
 char				*addexp(char *result, int ex10);
 char				*remove_insignificant_zeros(char *result);
 int					is_exp_form(int ex10, int precision);
-int					g_precision(int ex10, int precision);
+//int					g_precision(int ex10, int precision);
 char				*ftoa_g_conversion(double arg, t_format *sf);
 
 #endif

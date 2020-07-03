@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:09:07 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 18:02:31 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/03 13:41:42 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char					*strtolower(char *str)
 	return (str);
 }
 
-int						is_special_case(double d)
+int						is_special_case(long double d)
 {
 	if (d == 1.0 / 0.0 ||
 		d == -1.0 / 0.0 ||
@@ -65,7 +65,7 @@ int						is_special_case(double d)
 	return (0);
 }
 
-int						count_exp10(double d)
+int						count_exp10(long double d)
 {
 	int		pow;
 
