@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 01:21:36 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/03 14:39:28 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/03 15:04:13 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int				ft_convert_f(t_format *sf)
 	if (sf->precision < 0)
 		sf->precision = DEFAULT_PRECISION;
 	result = convert_float(arg, sf);
-	if (!is_special_case(arg))
-		result = flag_alter_f(result, sf);
 	result = flag_plus_space(result, sf);
 	result = width(result, sf);
 	result = flag_minus(result, sf);

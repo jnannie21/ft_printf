@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/03 14:51:12 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/03 15:17:57 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ static char				*special_cases(long double d)
 		return (ft_strdup("inf"));
 	else if (d == - 1.0 / 0.0)
 		return (ft_strdup("-inf"));
-	else if (d == 0.0 / 0.0)
+	else if (d != d)
 		return (ft_strdup("nan"));
-	else if (d == 0.0 / 0.0 * (-1))
-		return (ft_strdup("-nan"));
 	return (0);
 	/*
 	if (*((unsigned long *)&d) == POSITIVE_INFINITY)
