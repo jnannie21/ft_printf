@@ -6,22 +6,15 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 11:44:12 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 14:14:28 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-#define MINUS_ZERO 0x8000000000000000
-#define POSITIVE_INFINITY 0x7FF0000000000000
-#define NEGATIVE_INFINITY 0xFFF0000000000000
-#define MIN_PNAN 0x7FF0000000000001
-#define MAX_PNAN 0x7FFFFFFFFFFFFFFF
-#define MIN_NNAN 0xFFF0000000000001
-#define MAX_NNAN 0xFFFFFFFFFFFFFFFF
-
-static char				*special_cases(long double d)
+static char				*special_cases(double d)
 {
+/*
 	if (d == 1.0 / 0.0)
 		return (ft_strdup("inf"));
 	else if (d == - 1.0 / 0.0)
@@ -29,7 +22,8 @@ static char				*special_cases(long double d)
 	else if (d != d)
 		return (ft_strdup("nan"));
 	return (0);
-	/*
+*/
+	
 	if (*((unsigned long *)&d) == POSITIVE_INFINITY)
 		return (ft_strdup("inf"));
 	else if (*((unsigned long *)&d) == NEGATIVE_INFINITY)
@@ -41,7 +35,7 @@ static char				*special_cases(long double d)
 			*((unsigned long *)&d) <= MAX_NNAN)
 		return (ft_strdup("-nan"));
 	return (0);
-*/
+
 }
 
 static double			process_negative(double d, char **temp)
@@ -55,24 +49,6 @@ static double			process_negative(double d, char **temp)
 	return (d);
 }
 
-static int				count_exp10(double d)
-{
-	int		pow;
-
-	if (d == 0)
-		return (0);
-	if (d < 0)
-		d *= (-1);
-	pow = 0 - (d < 1);
-	if (d >= 1)
-		while ((d /= 10) >= 1)
-			pow++;
-	else
-		while ((d *= 10) < 1)
-			pow--;
-	return (pow);
-}
-
 char					*ft_ftoa(double d, int precision)
 {
 	char			*result;
@@ -81,8 +57,8 @@ char					*ft_ftoa(double d, int precision)
 	int				sum_len;
 	int				integer_len;
 
-	if ((result = special_cases(d)))
-		return (result);
+	if (is_special_case(d))
+		return (special_cases(d));
 	if ((integer_len = count_exp10(d) + 1) <= 0)
 		integer_len = 1;
 	sum_len = integer_len + precision;

@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 03:10:55 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 13:40:09 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int						ft_convert_s(t_format *sf)
 	if (!(result = (char *)va_arg(sf->args, char *)))
 	{
 		result = ft_strdup("(null)");
-//		if (sf->precision >= 0 && sf->precision < 6)
-//			*result = '\0';
+		if (sf->precision >= 0 && sf->precision < 6)
+			*result = '\0';
 	}
 	else
 		result = ft_strdup(result);
@@ -84,9 +84,11 @@ int						ft_convert_prcnt(t_format *sf)
 	char	*result;
 
 	result = ft_strdup("%");
+/*
 	result = width(result, sf);
 	result = flag_minus(result, sf);
 	result = flag_zero(result, sf);
+*/
 	return (print_result(result, sf));
 }
 
@@ -100,7 +102,8 @@ int						ft_convert_ptr(t_format *sf)
 
 	if (arg == 0)
 	{
-		result  = ft_strdup("0x0");
+//		result  = ft_strdup("0x0");
+		result  = ft_strdup("(nil)");
 		result = width(result, sf);
 		result = flag_minus(result, sf);
 		return (print_result(result, sf));

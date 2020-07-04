@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 11:38:29 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 14:00:39 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@
 # define LENGTH_L 3
 # define LENGTH_LL 4
 
-typedef	struct		s_float
-{
-	double			d;
-	long			l;
-	int				ex10;
-}					t_float;
+# define MINUS_ZERO 0x8000000000000000
+# define POSITIVE_INFINITY 0x7FF0000000000000
+# define NEGATIVE_INFINITY 0xFFF0000000000000
+# define MIN_PNAN 0x7FF0000000000001
+# define MAX_PNAN 0x7FFFFFFFFFFFFFFF
+# define MIN_NNAN 0xFFF0000000000001
+# define MAX_NNAN 0xFFFFFFFFFFFFFFFF
 
 typedef	struct		s_format
 {
@@ -90,7 +91,7 @@ char				*convert_float(double arg, t_format *sf);
 char				*addexp(char *result, int ex10);
 char				*remove_insignificant_zeros(char *result);
 int					is_exp_form(int ex10, int precision);
-//int					g_precision(int ex10, int precision);
 char				*ftoa_g_conversion(double arg, t_format *sf);
+char				*ft_ftoa(double d, int precision);
 
 #endif

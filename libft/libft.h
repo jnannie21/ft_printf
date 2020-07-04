@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 23:26:09 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/03 14:40:29 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 13:56:39 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char				*ft_itoa_base(long long n, int base);
 size_t				ft_strspn(const char *s, const char *accept);
 int					ft_wctomb(char *s, wchar_t wc);
 char				*ft_strchrnul(const char *s, int c);
-char				*ft_ftoa(double d, int precision);
 double				ft_pow10(int n);
 char				*ft_strjoin_wrap(char *str1, char *str2);
 
