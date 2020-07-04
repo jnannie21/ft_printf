@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/03 15:17:57 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/03 23:03:48 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 #define MAX_PNAN 0x7FFFFFFFFFFFFFFF
 #define MIN_NNAN 0xFFF0000000000001
 #define MAX_NNAN 0xFFFFFFFFFFFFFFFF
+
+static int				is_special_case(double d)
+{
+	if (d == 1.0 / 0.0 ||
+		d == -1.0 / 0.0 ||
+		d != d)
+		return (1);
+	return (0);
+}
 
 static char				*special_cases(long double d)
 {
@@ -73,31 +82,42 @@ static int				count_exp10(double d)
 	return (pow);
 }
 
+static char				*ftostr(double d, int prec, int len)
+{
+	int			digit;
+	char		*temp;
+	char		*result;
+	double		ex10;
+	double		rem;
+
+	if (!(result = ft_calloc(len + (d < 0) + (prec > 0) + 1, sizeof(char))))
+		return (0);
+	temp = result;
+	d = process_negative(d, &temp);
+	d = d / ft_pow10(len - prec - 1);
+	ex10 = 1;
+	rem = 0;
+	while (len--)
+	{
+		digit = d * ex10 - rem * 10;
+		*temp++ = digit + '0';
+		if (prec && len == prec)
+			*temp++ = '.';
+		rem = rem * 10 + digit;
+		ex10 *= 10;
+	}
+	return (result);
+}
+
 char					*ft_ftoa(double d, int precision)
 {
-	char			*result;
-	char			*temp;
-	int				digit;
 	int				sum_len;
 	int				integer_len;
 
-	if ((result = special_cases(d)))
-		return (result);
+	if (is_special_case(d))
+		return (special_cases(d));
 	if ((integer_len = count_exp10(d) + 1) <= 0)
 		integer_len = 1;
 	sum_len = integer_len + precision;
-	result = ft_calloc(sum_len + (d < 0) + (precision > 0) + 1, sizeof(char));
-	temp = result;
-	d = process_negative(d, &temp);
-	d = d / ft_pow10(sum_len - precision - 1);
-	while (sum_len--)
-	{
-		digit = d;
-		*temp++ = digit + '0';
-		if (precision && sum_len == precision)
-			*temp++ = '.';
-		d -= digit;
-		d *= 10;
-	}
-	return (result);
+	return (ftostr(d, precision, sum_len));
 }

@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/03 14:39:47 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 11:38:29 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 # define LENGTH_HH 2
 # define LENGTH_L 3
 # define LENGTH_LL 4
+
+typedef	struct		s_float
+{
+	double			d;
+	long			l;
+	int				ex10;
+}					t_float;
 
 typedef	struct		s_format
 {
@@ -41,7 +48,6 @@ typedef	struct		s_format
 }					t_format;
 
 int					ft_printf(const char *format, ...);
-//size_t				output_len(int set, size_t l);
 void				parse_format(t_format *sf);
 
 int					ft_convert_di(t_format *sf);
@@ -58,9 +64,9 @@ int					ft_convert_g(t_format *sf);
 
 char				*strtolower(char *str);
 char				*u_itoa_base(unsigned long long n, int base);
-int					is_special_case(long double d);
+int					is_special_case(double d);
 char				*attach_prefix(char *result, char *prefix);
-int					count_exp10(long double d);
+int					count_exp10(double d);
 char				*fill_in(char *result, int pos,
 							unsigned int length, char filler);
 int					print_result(char *result, t_format *sf);

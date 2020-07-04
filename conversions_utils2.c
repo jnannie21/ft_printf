@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/03 14:39:04 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 02:16:52 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,46 @@
 
 #define DEFAULT_PRECISION 6
 #define MAXINT 2147483647
+/*
+static char         *round_float(char *result)
+{
+    size_t          len;
+    unsigned int    i;
+
+    len = ft_strlen(result);
+    i = 2 + result[len - 2] == '.';
+    if (result[len - 1] > '5' ||
+        (result[len - 1] == 5 && (result[len - i] - '0') % 2))
+    {
+        while (i <= len && result[len - i] == '9')
+        {
+            result[len - i] = '0';
+            i++;
+            i += result[len - i] == '.';
+        }
+        if (i <= len && ft_isdigit(result[len - i]))
+            result[len - i]++;
+        else
+        {
+            result = fill_in(result, (i == len), len + (i == len), '1');
+            len++;
+        }
+    }
+    result[len - 1] = '\0';
+    return (result);
+}
+*/
 
 double			round_float(double arg, int precision)
 {
-//	long double			arg_pow;
-//	long				argl;
-	long double			del;
-//	int					ex10;
+	//double			p10;
+	//long			argl;
+	double			del;
+	//double			temp_arg;
+	//int					ex10;
 
-//	ex10 = count_exp10(arg);
+	//ex10 = count_exp10(arg);
+	//arg = arg / ft_pow10(ex10);
 //	if (precision > 308 || (precision + ex10) > 307)
 //	{
 //		if (ex10 >= 0)
@@ -35,12 +66,58 @@ double			round_float(double arg, int precision)
 		del = -0.5;
 	del /= ft_pow10(precision);
 	arg += del;
-//	argl = arg;
-//	if ((int)((arg - argl) * 10) == 0)
-//		arg = arg - (argl % 10) % 2;
+/*
+	p10 = ft_pow10(precision);
+	arg *= p10;
+	temp_arg = arg;
+	temp_arg += del;
+	if (count_exp10(temp_arg) <= 14)
+	{
+		argl = temp_arg;
+		if ((int)((temp_arg - argl) * 10) == 0)
+			if ((argl % 10) % 2)
+				temp_arg = arg;
+	}
+	arg = temp_arg /= p10;
+*/
 	return (arg);
 }
+/*
+static char		*correct_result_for_e(char *result)
+{
+	if (!ft_isdigit(*result))
+		result++;
+	if (*result == '0')
+	{
+		*result = *(result + 2);
+		ft_memmove(result + 2, result + 3, ft_strlen(result + 3));
+		result[ft_strlen(result) - 1] = '0';
+	}
+	else if (*(result + 1) != '.')
+	{
+		*(result + 2) = *(result + 1);
+		*(result + 1) = '.';
+		result[ft_strlen(result) - 1] = '\0';
+	}
+	return (result);
+}
+*/
+/*
+static double	divide_ex10(double arg, int ex10)
+{
+	double			multiplier;
 
+	multiplier = 10;
+	if (ex10 < 0)
+	{
+		multiplier = 0.1;
+		ex10 *= (-1);
+	}
+	while (ex10--)
+		arg /= multiplier;
+	return (arg);
+}
+*/
 char			*convert_float(double arg, t_format *sf)
 {
 	char				*result;
@@ -51,13 +128,17 @@ char			*convert_float(double arg, t_format *sf)
 		arg = arg / ft_pow10(ex10);
 	if (arg != 0)
 		arg = round_float(arg, sf->precision);
-	if (sf->conversion == 'e' &&
-		count_exp10(arg) > 0)
-		{
-			ex10++;
-			arg = arg / 10;
-		}
+	if (sf->conversion == 'e')
+	{
+		ex10 += count_exp10(arg);
+		arg = arg / ft_pow10(count_exp10(arg));
+	}
 	result = ft_ftoa(arg, sf->precision);
+/*
+	result = round_float(result);
+	if (sf->conversion == 'e' && arg != 0 && sf->precision > 0)
+		result = correct_result_for_e(result);
+*/
 	if (!is_special_case(arg))
 		result = flag_alter_f(result, sf);
 	if (sf->conversion == 'e')
