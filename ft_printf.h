@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 14:00:39 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 14:23:16 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@
 # include <wchar.h>
 
 # define CONVERSIONS "cspdiuxX%nfge"
-# define DEC_DIGITS "1234567890"
-# define LENGTH_H 1
-# define LENGTH_HH 2
-# define LENGTH_L 3
-# define LENGTH_LL 4
+# define DEC_DIG "1234567890"
 
 # define MINUS_ZERO 0x8000000000000000
 # define POSITIVE_INFINITY 0x7FF0000000000000

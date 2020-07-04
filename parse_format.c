@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 01:53:42 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 19:20:27 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 16:29:10 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void				parse_width(t_format *sf)
 	else
 	{
 		sf->width = ft_atoi(sf->format);
-		sf->format += ft_strspn(sf->format, DEC_DIGITS);
+		sf->format += ft_strspn(sf->format, DEC_DIG);
 	}
 }
 
@@ -65,7 +65,7 @@ static void				parse_precision(t_format *sf)
 	else
 	{
 		sf->precision = ft_atoi(sf->format);
-		sf->format += ft_strspn(sf->format, DEC_DIGITS);
+		sf->format += ft_strspn(sf->format, DEC_DIG);
 	}
 }
 
@@ -85,7 +85,7 @@ static void				parse_length(t_format *sf)
 
 static void				parse_conversion(t_format *tf)
 {
-	if (!ft_strchr(CONVERSIONS, *tf->format))
+	if (!ft_strchr(CONVERSIONS, *tf->format) || *tf->format == '\0')
 		return ;
 	tf->conversion = *tf->format;
 	tf->format++;
@@ -101,4 +101,6 @@ void					parse_format(t_format *sf)
 	parse_precision(sf);
 	parse_length(sf);
 	parse_conversion(sf);
+	if (!sf->conversion)
+		sf->conversion = -1;
 }

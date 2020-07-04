@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 13:47:58 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 14:24:48 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char			*remove_insignificant_zeros(char *result)
 
 	if (!(decimal_point = ft_strchr(result, '.')))
 		return (result);
-	last_zero = decimal_point + ft_strspn(decimal_point + 1, "0123456789");
+	last_zero = decimal_point + ft_strspn(decimal_point + 1, DEC_DIG);
 	if (*last_zero != '0')
 		return (result);
 	zeros = 0;
