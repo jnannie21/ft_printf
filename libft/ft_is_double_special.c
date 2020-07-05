@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_is_double_special.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/10 14:52:39 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 22:11:03 by jnannie          ###   ########.fr       */
+/*   Created: 2020/07/05 21:17:06 by jnannie           #+#    #+#             */
+/*   Updated: 2020/07/05 21:17:23 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		count_num(int n)
+int						ft_is_double_special(double d)
 {
-	int		num;
-
-	num = 1;
-	while (n / ft_pow10(num) != 0)
-		num++;
-	return (num);
-}
-
-void			ft_putnbr_fd(int n, int fd)
-{
-	int		num;
-
-	num = count_num(n);
-	if (n >= 0)
-		n *= (-1);
-	else
-		ft_putchar_fd('-', fd);
-	while (num--)
-		ft_putchar_fd((-1) * ((int)(n / ft_pow10(num)) % 10 - 48), fd);
+	if (*((unsigned long *)&d) == POSITIVE_INFINITY ||
+		*((unsigned long *)&d) == NEGATIVE_INFINITY ||
+		(*((unsigned long *)&d) >= MIN_PNAN &&
+		*((unsigned long *)&d) <= MAX_PNAN) ||
+		(*((unsigned long *)&d) >= MIN_NNAN &&
+		*((unsigned long *)&d) <= MAX_NNAN))
+		return (1);
+	return (0);
 }

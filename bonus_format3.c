@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format3.c                                          :+:      :+:    :+:   */
+/*   bonus_format3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/05 20:44:55 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 21:56:35 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 23:35:59 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "bonus_ft_printf.h"
 
 char			*integer_precision(char *result, t_format *sf)
 {

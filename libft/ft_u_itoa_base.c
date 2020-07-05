@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_u_itoa_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/10 14:52:39 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 22:11:03 by jnannie          ###   ########.fr       */
+/*   Created: 2020/07/05 21:20:01 by jnannie           #+#    #+#             */
+/*   Updated: 2020/07/05 21:22:39 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		count_num(int n)
+char					*ft_u_itoa_base(unsigned long long n, int base)
 {
-	int		num;
+	char				*last_digit;
+	char				*result;
+	char				*remains;
 
-	num = 1;
-	while (n / ft_pow10(num) != 0)
-		num++;
-	return (num);
-}
-
-void			ft_putnbr_fd(int n, int fd)
-{
-	int		num;
-
-	num = count_num(n);
-	if (n >= 0)
-		n *= (-1);
+	last_digit = ft_itoa_base(n % base, base);
+	if (n / base != 0)
+		remains = ft_itoa_base(n / base, base);
 	else
-		ft_putchar_fd('-', fd);
-	while (num--)
-		ft_putchar_fd((-1) * ((int)(n / ft_pow10(num)) % 10 - 48), fd);
+		remains = ft_strdup("");
+	result = 0;
+	if (last_digit && remains)
+		result = ft_strjoin(remains, last_digit);
+	free(remains);
+	free(last_digit);
+	return (result);
 }

@@ -6,24 +6,14 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 04:25:28 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/27 10:52:20 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 22:09:19 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 #define MININTVALUE -2147483648
-/*
-static long		ft_pow10(int n)
-{
-	long		res;
 
-	res = 1;
-	while (n--)
-		res *= 10;
-	return (res);
-}
-*/
 static int		count_num(int n)
 {
 	int		num;

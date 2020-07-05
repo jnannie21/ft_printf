@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_conversions.c                                    :+:      :+:    :+:   */
+/*   bonus_f_conversions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 01:21:36 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 21:34:26 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 23:35:43 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "bonus_ft_printf.h"
 
 #define DEFAULT_PRECISION 6
 

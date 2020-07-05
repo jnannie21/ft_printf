@@ -6,11 +6,11 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 07:17:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 20:24:02 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 21:29:50 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static char				*special_cases(double d)
 {
@@ -46,9 +46,9 @@ char					*ft_ftoa(double d, int precision)
 	int				sum_len;
 	int				integer_len;
 
-	if (is_special_case(d))
+	if (ft_is_double_special(d))
 		return (special_cases(d));
-	if ((integer_len = count_exp10(d) + 1) <= 0)
+	if ((integer_len = ft_count_exp10(d) + 1) <= 0)
 		integer_len = 1;
 	sum_len = integer_len + precision;
 	result = ft_calloc(sum_len + (d < 0) + (precision > 0) + 1, sizeof(char));

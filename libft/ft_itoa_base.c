@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/05 09:34:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/09 01:59:54 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 22:12:22 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char				*ft_itoa_base(long long n, int base)
 	while (num--)
 	{
 		s[num + (n < 0)] = (n < 0) ? (n % base) * (-1) + '0' : n % base + '0';
-		if(s[num + (n < 0)] > '9')
+		if (s[num + (n < 0)] > '9')
 			s[num + (n < 0)] += 7;
 		n /= base;
 	}

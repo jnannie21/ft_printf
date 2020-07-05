@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 23:26:09 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 20:27:25 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 21:59:59 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+
+# define MINUS_ZERO 0x8000000000000000
+# define POSITIVE_INFINITY 0x7FF0000000000000
+# define NEGATIVE_INFINITY 0xFFF0000000000000
+# define MIN_PNAN 0x7FF0000000000001
+# define MAX_PNAN 0x7FFFFFFFFFFFFFFF
+# define MIN_NNAN 0xFFF0000000000001
+# define MAX_NNAN 0xFFFFFFFFFFFFFFFF
 
 typedef	struct		s_list
 {
@@ -76,5 +84,14 @@ size_t				ft_strspn(const char *s, const char *accept);
 int					ft_wctomb(char *s, wchar_t wc);
 char				*ft_strchrnul(const char *s, int c);
 double				ft_pow10(int n);
+char				*ft_ftoa(double d, int precision);
+int					ft_count_exp10(double d);
+int					ft_is_double_special(double d);
+char				*ft_strjoin_wrap(char *str1, char *str2);
+char				*ft_u_itoa_base(unsigned long long n, int base);
+char				*ft_strtolower(char *str);
+void				ft_strcpytoend(char *dest, const char *src);
+char				*ft_fill_in(char *result, int pos,
+								unsigned int length, char filler);
 
 #endif

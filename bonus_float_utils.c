@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   float_conversions_utils1.c                         :+:      :+:    :+:   */
+/*   bonus_float_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 20:40:38 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 23:35:49 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "bonus_ft_printf.h"
 
 #define DEFAULT_PRECISION 6
 #define MAXINT 2147483647
@@ -33,14 +33,14 @@ double			prepare_arg(t_format *sf)
 	double	arg;
 
 	arg = sf->arg;
-	sf->ex10 = count_exp10(arg);
+	sf->ex10 = ft_count_exp10(arg);
 	if (sf->conversion == 'e')
 		arg /= ft_pow10(sf->ex10);
 	if (arg != 0)
 		arg = round_float(arg, sf->precision);
 	if (sf->conversion == 'e')
 	{
-		tmp_ex10 = count_exp10(arg);
+		tmp_ex10 = ft_count_exp10(arg);
 		sf->ex10 += tmp_ex10;
 		arg /= ft_pow10(tmp_ex10);
 	}

@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strcpytoend.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/10 14:52:39 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 22:11:03 by jnannie          ###   ########.fr       */
+/*   Created: 2020/07/05 21:24:07 by jnannie           #+#    #+#             */
+/*   Updated: 2020/07/05 21:24:39 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		count_num(int n)
+void				ft_strcpytoend(char *dest, const char *src)
 {
-	int		num;
+	size_t		dest_len;
+	size_t		src_len;
 
-	num = 1;
-	while (n / ft_pow10(num) != 0)
-		num++;
-	return (num);
-}
-
-void			ft_putnbr_fd(int n, int fd)
-{
-	int		num;
-
-	num = count_num(n);
-	if (n >= 0)
-		n *= (-1);
-	else
-		ft_putchar_fd('-', fd);
-	while (num--)
-		ft_putchar_fd((-1) * ((int)(n / ft_pow10(num)) % 10 - 48), fd);
+	dest_len = ft_strlen(dest);
+	src_len = ft_strlen(src);
+	ft_memcpy(dest + dest_len - src_len, src, src_len);
 }
