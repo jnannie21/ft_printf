@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -c -Wall -Wextra -Werror
+CFLAGS = -c -Wall -Wextra -Werror
 MAIN_SOURCES = 	ft_printf.c f_conversions.c i_conversions.c other_conversions.c 	\
 				conversions_utils.c float_utils.c									\
 				format1.c format2.c format3.c parse_format.c
