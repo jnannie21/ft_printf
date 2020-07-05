@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 18:29:11 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 18:23:18 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ static int					convert(t_format *sf)
 
 static void				init_sf(t_format *sf)
 {
+	sf->arg = 0;
+	sf->ex10 = 0;
 	sf->width = 0;
 	sf->precision = -1;
 	sf->flagalter = 0;

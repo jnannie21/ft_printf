@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 01:53:42 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 20:26:45 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 14:38:27 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ static void				parse_length(t_format *sf)
 		}
 }
 
-static void				parse_conversion(t_format *tf)
+static void				parse_conversion(t_format *sf)
 {
-	if (!ft_strchr(CONVERSIONS, *tf->format) || *tf->format == '\0')
+	if (!ft_strchr(CONVERSIONS, *sf->format) || *sf->format == '\0')
 		return ;
-	tf->conversion = *tf->format;
-	tf->format++;
+	sf->conversion = *sf->format;
+	sf->format++;
 }
 
 void					parse_format(t_format *sf)

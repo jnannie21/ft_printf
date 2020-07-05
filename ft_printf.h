@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 20:26:33 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 18:26:50 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ typedef	struct		s_format
 {
 	char			*format;
 	va_list			args;
+	double			arg;
+	int				ex10;
+	int				precision;
 	int				len;
 	int				width;
-	int				precision;
 	int				flagalter;
 	int				flagplus;
 	int				flagminus;
@@ -81,12 +83,14 @@ unsigned long long	read_unsigned_arg(t_format *sf);
 long long			read_signed_arg(t_format *sf);
 
 int					read_precision(const char *format);
-double				round_float(double arg, int precision);
-char				*convert_float(double arg, t_format *sf);
+//double				round_float(double arg, int precision);
+//char				*convert_float(t_format *sf);
 char				*addexp(char *result, int ex10);
 char				*remove_insignificant_zeros(char *result);
 int					is_exp_form(int ex10, int precision);
-char				*ftoa_g_conversion(double arg, t_format *sf);
+//char				*g_conversion(t_format *sf);
 char				*ft_ftoa(double d, int precision);
+double				prepare_arg(t_format *sf);
+void				g_precision(t_format *sf);
 
 #endif

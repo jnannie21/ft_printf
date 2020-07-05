@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 21:45:57 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 18:08:02 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 #define DEFAULT_PRECISION 6
 #define MAXINT 2147483647
 
-double			round_float(double arg, int precision)
+static double	round_float(double arg, int precision)
 {
 	double			del;
+
 	del = 0.5;
 	if (arg < 0)
 		del = -0.5;
@@ -26,36 +27,24 @@ double			round_float(double arg, int precision)
 	return (arg);
 }
 
-/*
-**	in line 46-50 there is correction after rounding
-**	and in case if something like 0.000000000000000100 became something
-**	like 0.000000000000000099
-*/
-char			*convert_float(double arg, t_format *sf)
+double			prepare_arg(t_format *sf)
 {
-	char				*result;
-	int					ex10;
+	int		tmp_ex10;
+	double	arg;
 
+	arg = sf->arg;
+	sf->ex10 = count_exp10(arg);
 	if (sf->conversion == 'e')
-	{
-		ex10 = count_exp10(arg);
-		arg /= ft_pow10(ex10);
-	}
+		arg /= ft_pow10(sf->ex10);
 	if (arg != 0)
 		arg = round_float(arg, sf->precision);
 	if (sf->conversion == 'e')
 	{
-		ex10 += count_exp10(arg);
-		arg /= ft_pow10(count_exp10(arg));
+		tmp_ex10 = count_exp10(arg);
+		sf->ex10 += tmp_ex10;
+		arg /= ft_pow10(tmp_ex10);
 	}
-	result = ft_ftoa(arg, sf->precision);
-	if (!is_special_case(arg))
-	{
-		result = flag_alter_f(result, sf);
-		if (sf->conversion == 'e')
-			result = addexp(result, ex10);
-	}
-	return (result);
+	return (arg);
 }
 
 char			*addexp(char *result, int ex10)
@@ -99,26 +88,33 @@ char			*remove_insignificant_zeros(char *result)
 
 int				is_exp_form(int ex10, int precision)
 {
-
 	if (ex10 < -4 || ex10 >= precision)
 		return (1);
 	return (0);
 }
 
-char			*ftoa_g_conversion(double arg, t_format *sf)
+static void		precision_according_conversion(t_format *sf, int precision)
 {
-	int					ex10;
-	char				*result;
-
-	ex10 = count_exp10(arg);
-	if (is_exp_form(ex10, sf->precision))
+	prepare_arg(sf);
+	if (is_exp_form(sf->ex10, precision))
 	{
 		sf->conversion = 'e';
-		if (sf->precision)
-			sf->precision--;
+		if (precision)
+			sf->precision = precision - 1;
 	}
-	else 
-		sf->precision = sf->precision - ex10 - 1;
-	result = convert_float(arg, sf);
-	return (result);
+	else
+		sf->precision = precision - sf->ex10 - 1;
+}
+
+void			g_precision(t_format *sf)
+{
+	int			precision;
+
+	if (sf->precision < 0)
+		sf->precision = DEFAULT_PRECISION;
+	if (!sf->precision)
+		sf->precision++;
+	precision = sf->precision;
+	precision_according_conversion(sf, precision);
+	precision_according_conversion(sf, precision);
 }
