@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 14:23:16 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 20:26:33 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdarg.h>
 # include <wchar.h>
 
-# define CONVERSIONS "cspdiuxX%nfge"
 # define DEC_DIG "1234567890"
 
 # define MINUS_ZERO 0x8000000000000000

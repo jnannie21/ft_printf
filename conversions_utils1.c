@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:09:07 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 14:03:51 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 20:24:11 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,6 @@ int						is_special_case(double d)
 		*((unsigned long *)&d) <= MAX_NNAN))
 		return (1);
 	return (0);
-/*
-	if (d == 1.0 / 0.0 ||
-		d == -1.0 / 0.0 ||
-		d != d)
-		return (1);
-	return (0);
-*/
 }
 
 int						count_exp10(double d)

@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 14:24:48 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 21:45:57 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,35 @@ double			round_float(double arg, int precision)
 	return (arg);
 }
 
+/*
+**	in line 46-50 there is correction after rounding
+**	and in case if something like 0.000000000000000100 became something
+**	like 0.000000000000000099
+*/
 char			*convert_float(double arg, t_format *sf)
 {
 	char				*result;
 	int					ex10;
 
-	ex10 = count_exp10(arg);
 	if (sf->conversion == 'e')
-		arg = arg / ft_pow10(ex10);
+	{
+		ex10 = count_exp10(arg);
+		arg /= ft_pow10(ex10);
+	}
 	if (arg != 0)
 		arg = round_float(arg, sf->precision);
 	if (sf->conversion == 'e')
 	{
 		ex10 += count_exp10(arg);
-		arg = arg / ft_pow10(count_exp10(arg));
+		arg /= ft_pow10(count_exp10(arg));
 	}
 	result = ft_ftoa(arg, sf->precision);
 	if (!is_special_case(arg))
+	{
 		result = flag_alter_f(result, sf);
-	if (sf->conversion == 'e')
-		result = addexp(result, ex10);
+		if (sf->conversion == 'e')
+			result = addexp(result, ex10);
+	}
 	return (result);
 }
 
@@ -88,10 +97,10 @@ char			*remove_insignificant_zeros(char *result)
 	return (result);
 }
 
-int			is_exp_form(int ex10, int precision)
+int				is_exp_form(int ex10, int precision)
 {
 
-	if (ex10 && (ex10 < -4 || ex10 >= precision))
+	if (ex10 < -4 || ex10 >= precision)
 		return (1);
 	return (0);
 }

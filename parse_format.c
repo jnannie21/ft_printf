@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 01:53:42 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 16:29:10 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 20:26:45 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #define FLAGS "-0# +"
 #define LENGTH_MODIFIERS "lh"
+#define CONVERSIONS "cspdiuxX%nfge"
 
 static void				parse_flags(t_format *sf)
 {
@@ -101,6 +102,4 @@ void					parse_format(t_format *sf)
 	parse_precision(sf);
 	parse_length(sf);
 	parse_conversion(sf);
-	if (!sf->conversion)
-		sf->conversion = -1;
 }

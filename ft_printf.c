@@ -6,71 +6,27 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/04 18:17:22 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/04 18:29:11 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#define PRINTABLE 127
-#define LENGTH_MODIFIERS "lh"
-
-typedef int (*conversion_func)(t_format *);
-
-static char				*wrong_format(t_format *sf)
-{
-	char		*result;
-
-	result = ft_strdup("%");
-	if (sf->flagalter)
-		result = ft_strjoin_wrap(result, ft_strdup("#"));
-	if (sf->flagplus)
-		result = ft_strjoin_wrap(result, ft_strdup("+"));
-	else if (sf->flagspace)
-		result = ft_strjoin_wrap(result, ft_strdup(" "));
-	if (sf->flagminus)
-		result = ft_strjoin_wrap(result, ft_strdup("-"));
-	else if (sf->flagzero)
-		result = ft_strjoin_wrap(result, ft_strdup("0"));
-	if (sf->width)
-		result = ft_strjoin_wrap(result, ft_itoa(sf->width));
-	if (sf->precision >= 0)
-	{
-		result = ft_strjoin_wrap(result, ft_strdup("."));
-		result = ft_strjoin_wrap(result, ft_itoa(sf->precision));
-	}
-	return (result);
-}
 
 static int				print_regular_text(t_format *sf)
 {
 	int			len;
 	char		*prcnt;
-	char		*result;
-	char		*temp;
 
-	if (sf->conversion == -1)
-		result = wrong_format(sf);
-	else
-		result = ft_strdup("");
 	prcnt = ft_strchrnul(sf->format, '%');
-	if (!*sf->format && sf->conversion == -1)
-	{
-		free(result);
-		sf->len = -1;
-		return (-1);
-	}
-	temp = ft_substr(sf->format, 0, prcnt - sf->format);
-	result = ft_strjoin_wrap(result, temp);
-	len = write(1, result, ft_strlen(result));
-	free(result);
-	sf->format += prcnt - sf->format;
+	len = write(1, sf->format, prcnt - sf->format);
+	sf->format += len;
 	sf->len += len;
 	return (len);
 }
 
 static int					convert(t_format *sf)
 {
-	if (sf->conversion == '\0' || sf->conversion == -1)
+	if (sf->conversion == '\0')
 		return (print_regular_text(sf));
 	else if (sf->conversion == 'd' || sf->conversion == 'i')
 		return (ft_convert_di(sf));
