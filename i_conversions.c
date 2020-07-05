@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 12:03:30 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/02 15:11:06 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 18:35:28 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int						ft_convert_u(t_format *sf)
 	return (print_result(result, sf));
 }
 
-int						ft_convert_xX(t_format *sf)
+int			ft_convert_xx(t_format *sf)
 {
 	char				*result;
 	long long			arg;

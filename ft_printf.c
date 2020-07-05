@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:31:18 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 18:23:18 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 18:36:17 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int					convert(t_format *sf)
 	else if (sf->conversion == 'u')
 		return (ft_convert_u(sf));
 	else if (sf->conversion == 'x' || sf->conversion == 'X')
-		return (ft_convert_xX(sf));
+		return (ft_convert_xx(sf));
 	else if (sf->conversion == 'c')
 		return (ft_convert_c(sf));
 	else if (sf->conversion == 's')

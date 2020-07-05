@@ -1,7 +1,9 @@
 CC = gcc
 CFLAGS = -g -c -Wall -Wextra -Werror
-MAIN_SOURCES = 	ft_printf.c conversions1.c conversions2.c conversions3.c parse_format.c	\
-				format.c conversions_utils1.c conversions_utils2.c ft_ftoa.c
+MAIN_SOURCES = 	ft_printf.c f_conversions.c i_conversions.c other_conversions.c 	\
+				utils1.c utils2.c float_utils1.c float_utils2.c						\
+				format1.c format2.c format3.c parse_format.c						\
+				ft_ftoa.c
 BONUS_SOURCES =
 HEADER = ft_printf.h
 NAME = libftprintf.a

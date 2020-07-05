@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_wrap.c                                  :+:      :+:    :+:   */
+/*   conversions_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/27 10:28:51 by jnannie           #+#    #+#             */
-/*   Updated: 2020/06/28 14:33:22 by jnannie          ###   ########.fr       */
+/*   Created: 2020/07/05 20:35:31 by jnannie           #+#    #+#             */
+/*   Updated: 2020/07/05 20:36:58 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 char						*ft_strjoin_wrap(char *str1, char *str2)
 {

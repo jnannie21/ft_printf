@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 18:26:50 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/05 20:46:35 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <wchar.h>
 
 # define DEC_DIG "1234567890"
+# define PREFIXES "0+-xX"
 
 # define MINUS_ZERO 0x8000000000000000
 # define POSITIVE_INFINITY 0x7FF0000000000000
@@ -50,7 +51,7 @@ void				parse_format(t_format *sf);
 
 int					ft_convert_di(t_format *sf);
 int					ft_convert_u(t_format *sf);
-int					ft_convert_xX(t_format *sf);
+int					ft_convert_xx(t_format *sf);
 int					ft_convert_c(t_format *sf);
 int					ft_convert_s(t_format *sf);
 int					ft_convert_prcnt(t_format *sf);
@@ -68,6 +69,7 @@ int					count_exp10(double d);
 char				*fill_in(char *result, int pos,
 							unsigned int length, char filler);
 int					print_result(char *result, t_format *sf);
+char				*ft_strjoin_wrap(char *str1, char *str2);
 
 char				*integer_precision(char *result, t_format *sf);
 char				*string_precision(char *result, t_format *sf);
@@ -83,12 +85,9 @@ unsigned long long	read_unsigned_arg(t_format *sf);
 long long			read_signed_arg(t_format *sf);
 
 int					read_precision(const char *format);
-//double				round_float(double arg, int precision);
-//char				*convert_float(t_format *sf);
 char				*addexp(char *result, int ex10);
 char				*remove_insignificant_zeros(char *result);
 int					is_exp_form(int ex10, int precision);
-//char				*g_conversion(t_format *sf);
 char				*ft_ftoa(double d, int precision);
 double				prepare_arg(t_format *sf);
 void				g_precision(t_format *sf);
