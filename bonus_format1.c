@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 02:58:46 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 23:35:52 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 02:30:32 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,14 @@ char			*flag_zero(char *result, t_format *sf)
 	if (!result)
 		return (0);
 	if ((sf->precision >= 0 && ft_strchr("diuxX", sf->conversion)) ||
-		sf->flagminus)
+		sf->flagminus || !sf->flagzero)
 		return (result);
-	if (sf->flagzero)
-	{
-		temp = result;
-		spaces = ft_strspn(result, " ");
-		result = ft_strdup(result + spaces);
-		prefix_len = ft_strspn(result, PREFIXES);
-		result = ft_fill_in(result, prefix_len, ft_strlen(temp), '0');
-		free(temp);
-	}
+	temp = result;
+	spaces = ft_strspn(result, " ");
+	result = ft_strdup(result + spaces);
+	prefix_len = ft_strspn(result, PREFIXES);
+	result = ft_fill_in(result, prefix_len, ft_strlen(temp), '0');
+	free(temp);
 	return (result);
 }
 
