@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/07 02:42:59 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 03:23:04 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int						ft_convert_s(t_format *sf)
 		result = ft_strdup(result);
 	result = string_precision(result, sf);
 	result = width(result, sf);
-	result = flag_minus(result, sf);
 	return (print_result(result, sf));
 }
 
@@ -60,7 +59,6 @@ int						ft_convert_prcnt(t_format *sf)
 
 	result = ft_strdup("%");
 	result = width(result, sf);
-	result = flag_minus(result, sf);
 	result = flag_zero(result, sf);
 	return (print_result(result, sf));
 }
@@ -76,7 +74,6 @@ int						ft_convert_ptr(t_format *sf)
 	{
 		result  = ft_strdup("0x0");
 		result = width(result, sf);
-		result = flag_minus(result, sf);
 		return (print_result(result, sf));
 	}
 	if ((result = ft_u_itoa_base(arg, 16)))
@@ -86,7 +83,6 @@ int						ft_convert_ptr(t_format *sf)
 		result = flag_alter_i(result, sf);
 	result = flag_plus_space(result, sf);
 	result = width(result, sf);
-	result = flag_minus(result, sf);
 	result = flag_zero(result, sf);
 	result = flag_space(result, sf);
 	return (print_result(result, sf));

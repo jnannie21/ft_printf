@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 01:21:36 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 23:35:43 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 03:22:23 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int				ft_convert_f(t_format *sf)
 	}
 	result = flag_plus_space(result, sf);
 	result = width(result, sf);
-	result = flag_minus(result, sf);
 	if (!ft_is_double_special(sf->arg))
 		result = flag_zero(result, sf);
 	result = flag_space(result, sf);
@@ -55,7 +54,6 @@ int				ft_convert_e(t_format *sf)
 	}
 	result = flag_plus_space(result, sf);
 	result = width(result, sf);
-	result = flag_minus(result, sf);
 	if (!ft_is_double_special(sf->arg))
 		result = flag_zero(result, sf);
 	result = flag_space(result, sf);
@@ -80,7 +78,6 @@ int				ft_convert_g(t_format *sf)
 		result = remove_insignificant_zeros(result);
 	result = flag_plus_space(result, sf);
 	result = width(result, sf);
-	result = flag_minus(result, sf);
 	if (!ft_is_double_special(sf->arg))
 		result = flag_zero(result, sf);
 	result = flag_space(result, sf);

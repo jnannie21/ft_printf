@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 22:17:17 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 03:19:50 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char				*width(char *result, t_format *sf);
 char				*flag_alter_i(char *result, t_format *sf);
 char				*flag_alter_f(char *result, t_format *sf);
 char				*flag_plus_space(char *result, t_format *sf);
-char				*flag_minus(char *result, t_format *sf);
 char				*flag_zero(char *result, t_format *sf);
 char				*flag_space(char *result, t_format *sf);
 
