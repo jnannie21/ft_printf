@@ -6,13 +6,11 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 01:21:36 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/07 03:22:23 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 03:54:36 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bonus_ft_printf.h"
-
-#define DEFAULT_PRECISION 6
 
 int				ft_convert_f(t_format *sf)
 {
@@ -20,7 +18,7 @@ int				ft_convert_f(t_format *sf)
 
 	sf->arg = (double)(va_arg(sf->args, double));
 	if (sf->precision < 0)
-		sf->precision = DEFAULT_PRECISION;
+		sf->precision = DEFAULT_FLOAT_PRECISION;
 	sf->arg = prepare_arg(sf);
 	result = ft_ftoa(sf->arg, sf->precision);
 	if (!ft_is_double_special(sf->arg))
@@ -43,7 +41,7 @@ int				ft_convert_e(t_format *sf)
 
 	sf->arg = (double)(va_arg(sf->args, double));
 	if (sf->precision < 0)
-		sf->precision = DEFAULT_PRECISION;
+		sf->precision = DEFAULT_FLOAT_PRECISION;
 	sf->arg = prepare_arg(sf);
 	result = ft_ftoa(sf->arg, sf->precision);
 	if (!ft_is_double_special(sf->arg))

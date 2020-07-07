@@ -6,14 +6,11 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 21:32:31 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/05 23:35:49 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 03:54:24 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bonus_ft_printf.h"
-
-#define DEFAULT_PRECISION 6
-#define MAXINT 2147483647
 
 static double	round_float(double arg, int precision)
 {
@@ -72,7 +69,7 @@ void			g_precision(t_format *sf)
 	int			precision;
 
 	if (sf->precision < 0)
-		sf->precision = DEFAULT_PRECISION;
+		sf->precision = DEFAULT_FLOAT_PRECISION;
 	if (!sf->precision)
 		sf->precision++;
 	precision = sf->precision;

@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 05:36:27 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/07 03:19:50 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 03:55:14 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define DEC_DIG "1234567890"
 # define PREFIXES "0+-xX"
+# define DEFAULT_FLOAT_PRECISION 6
 
 typedef	struct		s_format
 {

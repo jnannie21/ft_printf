@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/07 03:23:15 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 03:47:15 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int						ft_convert_ptr(t_format *sf)
 	arg = read_unsigned_arg(sf);
 	if (arg == 0)
 	{
-		result  = ft_strdup("0x0");
+		result = ft_strdup("0x0");
 		result = width(result, sf);
 		return (print_result(result, sf));
 	}
