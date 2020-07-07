@@ -6,13 +6,13 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 02:58:46 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/07 03:25:32 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 16:54:15 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bonus_ft_printf.h"
 
-char			*width(char *result, t_format *sf)
+char			*width_minus(char *result, t_format *sf)
 {
 	if (!result)
 		return (0);
