@@ -6,7 +6,7 @@
 /*   By: jnannie <jnannie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 03:01:58 by jnannie           #+#    #+#             */
-/*   Updated: 2020/07/07 03:23:04 by jnannie          ###   ########.fr       */
+/*   Updated: 2020/07/07 03:37:30 by jnannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int						ft_convert_c(t_format *sf)
 	if (result)
 		char_len = ft_strlen(result);
 	result = width(result, sf);
-	result = flag_minus(result, sf);
 	if (!result)
 		return (-1);
 	if (!(len = ft_strlen(result)))
